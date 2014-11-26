@@ -1,4 +1,8 @@
 $('#game_container').empty()
 $('#game_container').append("<%= escape_javascript(render @game) %>")
-$('.game').fadeIn()
+$('.game').fadeIn( function(){
+  $('#p1_hand').slideDown( function(){
+    $('#p2_hand').slideDown()
+  })
+})
 $('.game').css('display', 'table')
