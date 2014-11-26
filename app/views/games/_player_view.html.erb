@@ -1,0 +1,5 @@
+  <h2><%= player %></h2>
+  <h3>Score:</h3>
+  <span class='score'>0</span>
+  <%= render :partial => 'word_buttons', locals: {game: game} %>
+  <%= render :partial => 'hand', locals: {hand: hand} %>

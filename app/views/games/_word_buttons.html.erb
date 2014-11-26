@@ -1,0 +1,5 @@
+<div class='word_buttons'>
+    <%= button_to 'Submit Word', submit_word_game_coordinates_path(game), remote: :true, method: :get %>
+    <%= button_to 'Reset Word',
+reset_word_game_coordinates_path(game), remote: :true, method: :get %>
+</div>

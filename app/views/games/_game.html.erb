@@ -3,15 +3,9 @@
 <% end %>
 
 <div id='p1_hand', class='hand'>
-  <h2>Player 1</h2>
-  <h3>Score:</h3>
-  <span class='score'>0</span>
-  <%= render :partial => 'hand', locals: {hand: @p1_hand} %>
+  <%= render :partial => 'player_view', locals: {game: @game, hand: @p1_hand, player: 'Player 1'} %>
 </div>
 
 <div id='p2_hand', class='hand'>
-  <h2>Player 2</h2>
-  <h3>Score:</h3>
-  <span class='score'>0</span>
-  <%= render :partial => 'hand', locals: {hand: @p2_hand} %>
+  <%= render :partial => 'player_view', locals: {game: @game, hand: @p2_hand, player: 'Player 2'} %>
 </div>

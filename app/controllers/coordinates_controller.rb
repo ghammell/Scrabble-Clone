@@ -14,6 +14,5 @@ class CoordinatesController < ApplicationController
 
   def update_word(coordinate)
     session[:current_word] << @coordinate
-    p session[:current_word]
   end
 end
