@@ -15,12 +15,9 @@ class CoordinatesController < ApplicationController
     @letters = session[:current_word].map {|hash| ('A'..'Z').to_a.index(hash['letter'])}
     @player = session[:player]
     session[:current_word] = []
-    p @letters
-    p @reset_ids
   end
 
   def update_word(coordinate)
     session[:current_word] << {id: @coordinate.id, letter: @coordinate.letter}
-    p session[:current_word]
   end
 end

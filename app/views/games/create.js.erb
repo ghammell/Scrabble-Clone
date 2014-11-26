@@ -6,7 +6,9 @@ $('.game').fadeIn( function(){
   })
 })
 $('.game').css('display', 'table')
-BindDraggable('#p1_hand .letter')
+
+$('#p1_hand .letter').addClass('draggable')
+BindDraggable('.draggable')
 BindDroppable('.coordinate')
 
 var gameId = $('.game').attr('id').split("_")[1]
