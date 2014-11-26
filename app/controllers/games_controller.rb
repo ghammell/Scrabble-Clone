@@ -3,7 +3,7 @@ class GamesController < ApplicationController
     session[:current_word] = []
     session[:player] = 1
     @game = Game.create
-    @coordinates = @game.coordinates
+    @coordinates = @game.coordinates.sort_by {|coord| coord.id}
     @p1_hand = get_hand(7)
     @p2_hand = get_hand(7)
   end

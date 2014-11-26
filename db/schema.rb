@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141126072409) do
+ActiveRecord::Schema.define(version: 20141126202016) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,8 @@ ActiveRecord::Schema.define(version: 20141126072409) do
     t.datetime "updated_at"
     t.integer  "game_id"
   end
+
+  add_index "coordinates", ["game_id"], name: "index_coordinates_on_game_id", using: :btree
 
   create_table "dictionary_words", force: true do |t|
     t.string   "word"
