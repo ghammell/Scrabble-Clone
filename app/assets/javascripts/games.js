@@ -24,7 +24,7 @@ var BindDroppable = function(selector) {
       coord_id = $(this).attr('id').split("_")[1]
       UpdateCoordinate(coord_id, new_text)
     },
-    accept: '.letter',
+    accept: '.draggable',
     hoverClass: "ui-state-hover"
   })
 }
