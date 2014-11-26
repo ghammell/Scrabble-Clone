@@ -1,12 +1,21 @@
 var player = <%= @player %>
-var hand = $('#p' + player + '_hand')
+var nextPlayer = function() {
+  if (player === 1) {
+    return 2
+  } else {
+    return 1
+  }
+}()
+
+var hand = '#p' + player + '_hand'
+var nextPlayerHand = '#p' + nextPlayer + '_hand'
 var points = <%= @points %>
 
 var add_letters = {
   letters: <%= @letters %>,
   add: function() {
     for (i=0; i < this.letters.length; i++){
-      hand.children('ul').append(
+      $(hand).children('ul').append(
         "<li><div class='letter'>" + alphabet[this.letters[i]] + "</div></li>"
       )
     }
@@ -16,14 +25,23 @@ var add_letters = {
 var add_points = {
   points: <%= @points %>,
   add: function() {
-    currentScore = parseInt(hand.children('.score').text())
-    hand.children('.score').text(currentScore + this.points)
+    currentScore = parseInt($(hand).children('.score').text())
+    $(hand).children('.score').text(currentScore + this.points)
   }
 }
 
-add_points.add()
 
+add_points.add()
 add_letters.add()
 
-$('#p1_hand .letter').addClass('draggable')
+$(hand + ' .word_buttons').fadeOut()
+$(nextPlayerHand + ' .word_buttons').fadeIn()
+
+
+if (points >= 0) {
+  console.log('points > 0')
+  $(hand + ' .letter').removeClass('draggable')
+  $(nextPlayerHand + ' .letter').addClass('draggable')
+}
+
 BindDraggable('.draggable')

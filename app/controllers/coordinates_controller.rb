@@ -14,7 +14,13 @@ class CoordinatesController < ApplicationController
       @result = check_dictionary(word)
       if @result
         @points = @result.points
-        @player = session[:player]
+        if session[:player] == 1
+          @player = 1
+          session[:player] = 2
+        else
+          @player = 2
+          session[:player] = 1
+        end
         @letters = get_letters(@coordinates.length).map {|letter| ('A'..'Z').to_a.index(letter)}
         session[:current_word] = []
       else

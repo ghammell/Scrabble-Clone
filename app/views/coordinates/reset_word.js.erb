@@ -1,5 +1,5 @@
 var player = <%= @player %>
-var hand = $('#p' + player + '_hand')
+var hand = '#p' + player + '_hand'
 
 var reset_ids = {
   ids: <%= @reset_ids %>,
@@ -16,7 +16,7 @@ var reset_letters = {
   letters: <%= @letters %>,
   reset: function() {
     for (i=0; i < this.letters.length; i++) {
-      hand.children('ul').append(
+      $(hand).children('ul').append(
         "<li><div class='letter'>" + alphabet[this.letters[i]] + "</div></li>"
       )
     }
@@ -26,5 +26,5 @@ var reset_letters = {
 reset_ids.reset()
 reset_letters.reset()
 
-$('#p1_hand .letter').addClass('draggable')
+$(hand + ' .letter').addClass('draggable')
 BindDraggable('.draggable')
