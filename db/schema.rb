@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141126002820) do
+ActiveRecord::Schema.define(version: 20141126072409) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,13 @@ ActiveRecord::Schema.define(version: 20141126002820) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "game_id"
+  end
+
+  create_table "dictionary_words", force: true do |t|
+    t.string   "word"
+    t.integer  "points"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "games", force: true do |t|
