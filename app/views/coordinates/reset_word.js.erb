@@ -1,1 +1,6 @@
-$('body').append("<h1>YOOOOOOOOOOOOO</h1>")
+var reset_ids = <%= @reset_ids %>
+
+for (i=0; i < reset_ids.length; i++) {
+  $('#coordinate_' + reset_ids[i] + ' span').text('X').css('color', '#FFE1AA')
+}
+

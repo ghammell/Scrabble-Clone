@@ -10,9 +10,14 @@ class CoordinatesController < ApplicationController
   end
 
   def reset_word
+    session[:current_word].each {|hash| Coordinate.find(hash['id']).update_attribute('letter', '')}
+    @letters = session[:current_word].map {|hash| hash['letter']}
+    @reset_ids = session[:current_word].map{|hash| hash['id']}
+    session[:current_word] = []
   end
 
   def update_word(coordinate)
-    session[:current_word] << @coordinate
+    session[:current_word] << {id: @coordinate.id, letter: @coordinate.letter}
+    p session[:current_word]
   end
 end
