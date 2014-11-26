@@ -5,8 +5,7 @@ var BindDraggable = function(selector) {
   $(selector).draggable({
     scroll: true,
     cursor: 'pointer',
-    helper: 'clone',
-    revert: true,
+    revert: 'invalid',
     snap: false,
     opacity: 0.9
   })
@@ -16,6 +15,7 @@ var BindDroppable = function(selector) {
   $(selector).droppable({
     drop: function(event, ui) {
       new_text = ui.draggable.text()
+      $(ui.draggable).remove()
       $(this).find('span').text( new_text )
       $(this).effect('highlight', {color: 'black'}, 1000)
       coord_id = $(this).attr('id').split("_")[1]
