@@ -8,11 +8,21 @@ class CoordinatesController < ApplicationController
 
   def submit_word
     @coordinates = session[:current_word].map {|hash| Coordinate.find(hash['id'])}
-    p CoordinatesHelper::VerifyWord.word_valid?(sort_word(@coordinates))
+    sorted_coordinates = sort_coords(@coordinates)
+    sorted_letters = sorted_coordinates.map {|coord| coord.letter}
+    if CoordinatesHelper::VerifyWord.valid_placement?(sorted_coordinates)
+      check_dictionary(sorted_letters.join.downcase)
+    else
+      p "INVALID WORD PLACEMENT"
+    end
   end
 
-  def sort_word(coordinates)
+  def sort_coords(coordinates)
     coordinates.sort_by {|coord| coord.vertical}.sort_by{|coord| coord.horizontal}
+  end
+
+  def check_dictionary(word)
+    DictionaryWord.find_by(word: word)
   end
 
   def reset_word

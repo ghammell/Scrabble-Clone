@@ -10,7 +10,7 @@ class DictionarySeeder
   end
 
   def seed
-    cleanfile.each {|word| DictionaryWord.create(word: word, points: score_word(word)); p wordqu}
+    cleanfile.each {|word| DictionaryWord.create(word: word.downcase, points: score_word(word)); p wordqu}
   end
 
   def score_word(word)

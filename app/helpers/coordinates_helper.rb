@@ -1,6 +1,6 @@
 module CoordinatesHelper
   class VerifyWord
-    def self.word_valid?(coordinates)
+    def self.valid_placement?(coordinates)
       coordinates.map {|coord| [coord.vertical, coord.horizontal]}
       (1...coordinates.length).each do |index|
         previous = [coordinates[index-1].vertical, coordinates[index-1].horizontal]
