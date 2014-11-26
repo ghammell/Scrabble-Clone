@@ -7,6 +7,13 @@ class CoordinatesController < ApplicationController
   end
 
   def submit_word
+    @coordinates = session[:current_word].map {|hash| Coordinate.find(hash['id'])}
+    p @word = sort_word(@coordinates)
+  end
+
+  def sort_word(coordinates)
+    sorted = coordinates.sort_by {|coord| coord.vertical}.sort_by{|coord| coord.horizontal}
+    sorted.map {|coord| coord.letter}
   end
 
   def reset_word
