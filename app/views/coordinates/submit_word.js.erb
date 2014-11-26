@@ -1,1 +1,29 @@
-console.log('success')
+var player = <%= @player %>
+var hand = $('#p' + player + '_hand')
+var points = <%= @points %>
+
+var add_letters = {
+  letters: <%= @letters %>,
+  add: function() {
+    for (i=0; i < this.letters.length; i++){
+      hand.children('ul').append(
+        "<li><div class='letter'>" + alphabet[this.letters[i]] + "</div></li>"
+      )
+    }
+  }
+}
+
+var add_points = {
+  points: <%= @points %>,
+  add: function() {
+    currentScore = parseInt(hand.children('.score').text())
+    hand.children('.score').text(currentScore + this.points)
+  }
+}
+
+add_points.add()
+
+add_letters.add()
+
+$('#p1_hand .letter').addClass('draggable')
+BindDraggable('.draggable')

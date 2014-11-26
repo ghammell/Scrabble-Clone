@@ -9,12 +9,24 @@ class CoordinatesController < ApplicationController
   def submit_word
     @coordinates = session[:current_word].map {|hash| Coordinate.find(hash['id'])}
     sorted_coordinates = sort_coords(@coordinates)
-    sorted_letters = sorted_coordinates.map {|coord| coord.letter}
+    word = sorted_coordinates.map {|coord| coord.letter}.join.downcase
     if CoordinatesHelper::VerifyWord.valid_placement?(sorted_coordinates)
-      check_dictionary(sorted_letters.join.downcase)
+      @result = check_dictionary(word)
+      if @result
+        @points = @result.points
+        @player = session[:player]
+        @letters = get_letters(@coordinates.length).map {|letter| ('A'..'Z').to_a.index(letter)}
+        session[:current_word] = []
+      else
+        @errors = "Sorry, that word is not a valid word."
+      end
     else
-      p "INVALID WORD PLACEMENT"
+      @errors = "Sorry, that placemenent is invalid."
     end
+  end
+
+  def get_letters(num)
+    (0...num).map {|num| ('A'..'Z').to_a.sample}
   end
 
   def sort_coords(coordinates)
