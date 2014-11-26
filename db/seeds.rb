@@ -14,18 +14,9 @@ class DictionarySeeder
   end
 
   def score_word(word)
-    points = 0
-    word.downcase.chars.each do |char|
-      if @hard.include?(char)
-        points += 3
-      elsif @easy.include?(char)
-        points +=1
-      else
-        points += 2
-      end
-    end
-    points
+    letter_points = word.downcase.chars.map {|char| @hard.include?(char) ? 3 : @easy.include?(char) ? 1 : 2}
+    letter_points.inject(:+)
   end
 end
 
-DictionarySeeder.new('/usr/share/dict/words').seed
+p DictionarySeeder.new('/usr/share/dict/words').score_word('YOLO')
