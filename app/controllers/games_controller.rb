@@ -1,13 +1,19 @@
 class GamesController < ApplicationController
   def create
+    session[:current_word] = []
     @game = Game.create
     @coordinates = @game.coordinates
-    @p1_hand = get_pieces(7)
-    @p2_hand = get_pieces(7)
+    @p1_hand = get_hand(7)
+    @p2_hand = get_hand(7)
   end
 
-  def get_pieces(num)
-    alphabet = ('A'..'Z').to_a
-    (0..num).map {|num| alphabet.sample}
+  def get_hand(num)
+    vowels = ['A','E','I','O','U']
+    alphabet = ('A'..'Z').to_a - vowels
+    (0..num).map {|num| num.even? ? alphabet.sample : vowels.sample}
+  end
+
+  def get_letter(num)
+    ('A'..'Z').to_a.sample
   end
 end

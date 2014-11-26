@@ -6,6 +6,7 @@
   display: none;
 
   .coordinate {
+    color: #FFE1AA;
     width: 25px;
     text-align: center;
     background-color: #FFE1AA;
@@ -35,11 +36,16 @@
 
 .hand {
   text-align: center;
+
   ul {
     padding: 0;
     li {
       list-style-type: none;
     }
+  }
+
+  h3 {
+    margin-bottom: 0;
   }
 }
 
