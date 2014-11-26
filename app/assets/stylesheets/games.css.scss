@@ -25,9 +25,16 @@
   display: inline-block;
   font-size: 20px;
   padding: 10px;
+  transition: all 0.2s;
+}
+
+.letter:hover {
+  background-color: #805A15;
+  color: white;
 }
 
 .hand {
+  text-align: center;
   ul {
     padding: 0;
     li {
