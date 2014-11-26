@@ -1,6 +1,7 @@
 class GamesController < ApplicationController
   def create
     session[:current_word] = []
+    session[:player] = 1
     @game = Game.create
     @coordinates = @game.coordinates
     @p1_hand = get_hand(7)
