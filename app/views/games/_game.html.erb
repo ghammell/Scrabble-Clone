@@ -1,0 +1,11 @@
+<%= div_for @game do %>
+  <%= render @coordinates %>
+<% end %>
+
+<div id='p1_hand', class='hand'>
+  <%= render :partial => 'hand', locals: {hand: @p1_hand} %>
+</div>
+
+<div id='p2_hand', class='hand'>
+  <%= render :partial => 'hand', locals: {hand: @p2_hand} %>
+</div>

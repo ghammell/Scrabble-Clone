@@ -1,0 +1,50 @@
+.game {
+  background-color: #553700;
+  margin: 0 auto;
+  display: table;
+  padding: 10px;
+  display: none;
+
+  .coordinate {
+    width: 25px;
+    text-align: center;
+    background-color: #FFE1AA;
+    border: 1px solid #805A15;
+    display: inline-block;
+    font-size: 20px;
+    padding: 10px;
+  }
+
+}
+
+.letter {
+  width: 25px;
+  text-align: center;
+  background-color: #FFE1AA;
+  border: 1px solid #805A15;
+  display: inline-block;
+  font-size: 20px;
+  padding: 10px;
+}
+
+.hand {
+  ul {
+    padding: 0;
+    li {
+      list-style-type: none;
+    }
+  }
+}
+
+#p1_hand, #p2_hand {
+  position: fixed;
+  top: 100px;
+}
+
+#p1_hand {
+  left: 50px;
+}
+
+#p2_hand {
+  right: 50px;
+}

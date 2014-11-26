@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 20141126002820) do
     t.string   "letter",     default: ""
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "game_id"
   end
 
   create_table "games", force: true do |t|
