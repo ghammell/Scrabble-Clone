@@ -1,4 +1,6 @@
 class CoordinatesController < ApplicationController
+  skip_before_action :verify_authenticity_token
+
   def update_letter
     @coordinate = Coordinate.find(params["id"])
     @coordinate.update_attribute('letter', params["value"].squish)

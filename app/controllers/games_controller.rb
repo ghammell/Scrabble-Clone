@@ -1,4 +1,6 @@
 class GamesController < ApplicationController
+  skip_before_action :verify_authenticity_token
+
   def create
     session[:current_word] = []
     session[:player] = 1
