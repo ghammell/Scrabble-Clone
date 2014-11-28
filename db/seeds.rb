@@ -19,4 +19,4 @@ class DictionarySeeder
   end
 end
 
-p DictionarySeeder.new('/usr/share/dict/words').score_word('YOLO')
+DictionarySeeder.new('/usr/share/dict/words').seed

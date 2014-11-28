@@ -1,4 +1,5 @@
 class Game < ActiveRecord::Base
+  skip_before_action :verify_authenticity_token
   after_save :create_coordinates
   has_many :coordinates
 
