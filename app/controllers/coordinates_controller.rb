@@ -10,9 +10,7 @@ class CoordinatesController < ApplicationController
 
   def submit_word
     @coordinates = session[:current_word].map {|hash| Coordinate.find(hash['id'])}
-    droppable = determine_droppable_coordinates(@coordinates).flatten.compact.uniq - @coordinates
-    p droppable
-    droppable.each {|coord| p [coord.horizontal, coord.vertical]}
+    @droppable_ids = determine_droppable_coordinates(@coordinates).map{|coord| coord.id}
     sorted_coordinates = sort_coords(@coordinates)
     word = sorted_coordinates.map {|coord| coord.letter}.join.downcase
     if CoordinatesHelper::VerifyWord.valid_placement?(sorted_coordinates)
@@ -33,7 +31,7 @@ class CoordinatesController < ApplicationController
   def determine_droppable_coordinates(used_coordinates)
     game = Game.find(session[:game])
     taken = game.coordinates.select {|coord| coord.letter != ''}
-    taken.map {|coord| get_available_based_off_single_coordinate(game, coord)}
+    available = taken.map {|coord| get_available_based_off_single_coordinate(game, coord)}.flatten.uniq
   end
 
   def get_available_based_off_single_coordinate(game, coordinate)
@@ -48,6 +46,7 @@ class CoordinatesController < ApplicationController
 
     near_by = [ul, u, ur, r, dr, d, dl, l]
     near_by.map! {|position| game.coordinates.find_by(horizontal: position[0], vertical: position[1])}
+    near_by.compact.select {|coord| coord.letter == ''}
   end
 
   def update_player_session

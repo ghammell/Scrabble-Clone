@@ -1,4 +1,6 @@
 var player = <%= @player %>
+var droppableIds = <%= @droppable_ids %>
+console.log(droppableIds)
 var nextPlayer = function() {
   if (player === 1) {
     return 2
