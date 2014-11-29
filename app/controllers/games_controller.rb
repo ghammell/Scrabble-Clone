@@ -2,12 +2,13 @@ class GamesController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def create
-    session[:current_word] = []
-    session[:player] = 1
     @game = Game.create
     @coordinates = @game.coordinates.sort_by {|coord| coord.id}
     @p1_hand = get_hand(7)
     @p2_hand = get_hand(7)
+    session[:current_word] = []
+    session[:player] = 1
+    session[:game] = @game.id
   end
 
   def get_hand(num)
