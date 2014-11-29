@@ -16,13 +16,7 @@ class CoordinatesController < ApplicationController
       @result = check_dictionary(word)
       if @result
         @points = @result.points
-        if session[:player] == 1
-          @player = 1
-          session[:player] = 2
-        else
-          @player = 2
-          session[:player] = 1
-        end
+        update_player_session
         @letters = get_letters(@coordinates.length).map {|letter| ('A'..'Z').to_a.index(letter)}
         session[:current_word] = []
       else
@@ -30,6 +24,16 @@ class CoordinatesController < ApplicationController
       end
     else
       @errors = "Sorry, that placemenent is invalid."
+    end
+  end
+
+  def update_player_session
+    if session[:player] == 1
+      @player = 1
+      session[:player] = 2
+    else
+      @player = 2
+      session[:player] = 1
     end
   end
 

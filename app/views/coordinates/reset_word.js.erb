@@ -5,9 +5,10 @@ var reset_ids = {
   ids: <%= @reset_ids %>,
   reset: function() {
     for (i=0; i < this.ids.length; i++) {
-      coordinate_div = $('#coordinate_' + this.ids[i])
-      coordinate_div.find('span').text('X').css('color', '#FFE1AA')
-      coordinate_div.css('background-color', '#FFE1AA')
+      coordinate_div = '#coordinate_' + this.ids[i]
+      $(coordinate_div).droppable('enable')
+      $(coordinate_div).find('span').text('X').css('color', '#FFE1AA')
+      $(coordinate_div).css('background-color', '#FFE1AA')
     }
   }
 }
