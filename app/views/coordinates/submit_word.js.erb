@@ -1,6 +1,4 @@
 var player = <%= @player %>
-var droppableIds = <%= @droppable_ids %>
-console.log(droppableIds)
 var nextPlayer = function() {
   if (player === 1) {
     return 2
@@ -32,6 +30,17 @@ var add_points = {
   }
 }
 
+var dropResetter = {
+  ids: <%= @droppable_ids %>,
+  reset: function() {
+    $('.coordinate').droppable('disable')
+    for (i=0; i < this.ids.length; i++) {
+      coordinate_div = '#coordinate_' + this.ids[i]
+      $(coordinate_div).droppable('enable')
+    }
+  }
+}
+
 
 add_points.add()
 add_letters.add()
@@ -46,3 +55,4 @@ if (points >= 0) {
 }
 
 BindDraggable('.draggable')
+dropResetter.reset()

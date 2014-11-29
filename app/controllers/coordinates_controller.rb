@@ -10,12 +10,12 @@ class CoordinatesController < ApplicationController
 
   def submit_word
     @coordinates = session[:current_word].map {|hash| Coordinate.find(hash['id'])}
-    @droppable_ids = determine_droppable_coordinates(@coordinates).map{|coord| coord.id}
     sorted_coordinates = sort_coords(@coordinates)
     word = sorted_coordinates.map {|coord| coord.letter}.join.downcase
     if CoordinatesHelper::VerifyWord.valid_placement?(sorted_coordinates)
       @result = check_dictionary(word)
       if @result
+        @droppable_ids = determine_droppable_coordinates(@coordinates).map{|coord| coord.id}
         @points = @result.points
         update_player_session
         @letters = get_letters(@coordinates.length).map {|letter| ('A'..'Z').to_a.index(letter)}
