@@ -1,3 +1,5 @@
+<%= render 'update_droppable' %>
+
 var player = <%= @player %>
 var nextPlayer = function() {
   if (player === 1) {
@@ -29,18 +31,6 @@ var add_points = {
     $(hand).children('.score').text(currentScore + this.points)
   }
 }
-
-var dropResetter = {
-  ids: <%= @droppable_ids %>,
-  reset: function() {
-    $('.coordinate').droppable('disable')
-    for (i=0; i < this.ids.length; i++) {
-      coordinate_div = '#coordinate_' + this.ids[i]
-      $(coordinate_div).droppable('enable')
-    }
-  }
-}
-
 
 add_points.add()
 add_letters.add()

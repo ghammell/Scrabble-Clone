@@ -1,3 +1,5 @@
+<%= render 'update_droppable' %>
+
 var player = <%= @player %>
 var hand = '#p' + player + '_hand'
 
@@ -26,6 +28,8 @@ var reset_letters = {
 
 reset_ids.reset()
 reset_letters.reset()
+dropResetter.reset()
 
 $(hand + ' .letter').addClass('draggable')
 BindDraggable('.draggable')
+

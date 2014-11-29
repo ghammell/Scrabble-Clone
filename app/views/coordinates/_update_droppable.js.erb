@@ -1,0 +1,10 @@
+var dropResetter = {
+  ids: <%= @droppable_ids %>,
+  reset: function() {
+    $('.coordinate').droppable('disable')
+    for (i=0; i < this.ids.length; i++) {
+      coordinate_div = '#coordinate_' + this.ids[i]
+      $(coordinate_div).droppable('enable')
+    }
+  }
+}

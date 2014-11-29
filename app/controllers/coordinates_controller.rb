@@ -4,8 +4,9 @@ class CoordinatesController < ApplicationController
   def update_letter
     @coordinate = Coordinate.find(params["id"])
     @coordinate.update_attribute('letter', params["value"].squish)
+    @droppable_ids = determine_droppable_coordinates.map{|coord| coord.id}
+
     update_word(@coordinate)
-    render nothing: true
   end
 
   def submit_word
@@ -15,7 +16,7 @@ class CoordinatesController < ApplicationController
     if CoordinatesHelper::VerifyWord.valid_placement?(sorted_coordinates)
       @result = check_dictionary(word)
       if @result
-        @droppable_ids = determine_droppable_coordinates(@coordinates).map{|coord| coord.id}
+        @droppable_ids = determine_droppable_coordinates.map{|coord| coord.id}
         @points = @result.points
         update_player_session
         @letters = get_letters(@coordinates.length).map {|letter| ('A'..'Z').to_a.index(letter)}
@@ -28,7 +29,7 @@ class CoordinatesController < ApplicationController
     end
   end
 
-  def determine_droppable_coordinates(used_coordinates)
+  def determine_droppable_coordinates
     game = Game.find(session[:game])
     taken = game.coordinates.select {|coord| coord.letter != ''}
     available = taken.map {|coord| get_available_based_off_single_coordinate(game, coord)}.flatten.uniq
@@ -77,6 +78,7 @@ class CoordinatesController < ApplicationController
     @letters = session[:current_word].map {|hash| ('A'..'Z').to_a.index(hash['letter'])}
     @player = session[:player]
     session[:current_word] = []
+    @droppable_ids = determine_droppable_coordinates.map{|coord| coord.id}
   end
 
   def update_word(coordinate)
