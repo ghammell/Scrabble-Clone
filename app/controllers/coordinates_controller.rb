@@ -33,6 +33,11 @@ class CoordinatesController < ApplicationController
     game = Game.find(session[:game])
     taken = game.coordinates.select {|coord| coord.letter != ''}
     available = taken.map {|coord| get_available_based_off_single_coordinate(game, coord)}.flatten.uniq
+    if available == []
+      game.coordinates
+    else
+      available
+    end
   end
 
   def get_available_based_off_single_coordinate(game, coordinate)
