@@ -1,5 +1,5 @@
 class Coordinate < ActiveRecord::Base
-  has_many :neighbors, class_name: "Coordinate", foreign_key: "neighbor_id"
-  belongs_to :neighbor, class_name: "Coordinate"
+  has_many :friendships
+  has_many :friends, :through => :friendships
   belongs_to :game
 end

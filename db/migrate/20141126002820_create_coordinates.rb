@@ -6,7 +6,6 @@ class CreateCoordinates < ActiveRecord::Migration
       t.string :letter, default: ""
 
       t.timestamps
-      t.references :neighbor
       t.belongs_to :game
     end
   end

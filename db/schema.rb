@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141126202016) do
+ActiveRecord::Schema.define(version: 20141202060330) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,10 +19,9 @@ ActiveRecord::Schema.define(version: 20141126202016) do
   create_table "coordinates", force: true do |t|
     t.integer  "horizontal"
     t.integer  "vertical"
-    t.string   "letter",      default: ""
+    t.string   "letter",     default: ""
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "neighbor_id"
     t.integer  "game_id"
   end
 
@@ -31,6 +30,13 @@ ActiveRecord::Schema.define(version: 20141126202016) do
   create_table "dictionary_words", force: true do |t|
     t.string   "word"
     t.integer  "points"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "friendships", force: true do |t|
+    t.integer  "coordinate_id"
+    t.integer  "friend_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
