@@ -11,19 +11,13 @@ class CoordinatesController < ApplicationController
 
   def submit_word
     @coordinates = session[:current_word].map {|hash| Coordinate.find(hash['id'])}
-    sorted_coordinates = CoordinatesHelper::VerifyWord.sort_coords(@coordinates)
-    @word = sorted_coordinates.map {|coord| coord.letter}.join.downcase
-    if CoordinatesHelper::VerifyWord.valid_placement?(sorted_coordinates)
-      @result = CoordinatesHelper::VerifyWord.check_dictionary(@word)
-      if @result
-        @droppable_ids = CoordinatesHelper.determine_droppable_coordinates(session[:game]).map{|coord| coord.id}
-        @points = @result.points
-        update_player_session
-        @letters = get_letters(@coordinates.length).map {|letter| ('A'..'Z').to_a.index(letter)}
-        session[:current_word] = []
-      else
-        @errors = "Sorry, that word doesn't work, or it's connections don't work."
-      end
+    @words = CoordinatesHelper::VerifyWord.valid_placement?(@coordinates)
+    if @words
+      @droppable_ids = CoordinatesHelper.determine_droppable_coordinates(session[:game]).map{|coord| coord.id}
+      @results = @words.map {|word| [word.word, word.points]}
+      update_player_session
+      @letters = get_letters(@coordinates.length).map {|letter| ('A'..'Z').to_a.index(letter)}
+      session[:current_word] = []
     else
       @errors = "Sorry, that placemenent is invalid."
     end
@@ -42,8 +36,6 @@ class CoordinatesController < ApplicationController
   def get_letters(num)
     (0...num).map {|num| ('A'..'Z').to_a.sample}
   end
-
-
 
   def reset_word
     session[:current_word].each {|hash| Coordinate.find(hash['id']).update_attribute('letter', '')}
