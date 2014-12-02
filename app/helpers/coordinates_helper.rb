@@ -32,7 +32,7 @@ module CoordinatesHelper
   def self.determine_droppable_coordinates(game_id)
     game = Game.find(game_id)
     taken = game.coordinates.select {|coord| coord.letter != ''}
-    available = taken.map {|coord| get_available_based_off_single_coordinate(game, coord)}.flatten.uniq
+    available = taken.map {|coord| get_available_from_coordinate(game, coord)}.flatten.uniq
     if available == []
       game.coordinates
     else
@@ -40,7 +40,7 @@ module CoordinatesHelper
     end
   end
 
-  def self.get_available_based_off_single_coordinate(game, coordinate)
+  def self.get_available_from_coordinate(game, coordinate)
     ul = [coordinate.horizontal - 1, coordinate.vertical - 1]
     u = [coordinate.horizontal, coordinate.vertical - 1]
     ur = [coordinate.horizontal + 1, coordinate.vertical - 1 ]
