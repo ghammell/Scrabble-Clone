@@ -8,18 +8,15 @@ module CoordinatesHelper
 
     def self.check_connection_words(coordinates)
       coordinates.each do |coord|
-        check_horizontal(coord)
+        return false if check_horizontal(coord) == false
       end
       return true
     end
 
     def self.check_horizontal(coordinate)
       full_word = get_coords_in_direction(coordinate, -1) + get_coords_in_direction(coordinate, 1)
-      puts
-      puts
-      p full_word.uniq.map {|coord| coord.letter}
-      puts
-      puts
+      word = full_word.uniq.map {|coord| coord.letter}.join
+      return false if check_dictionary(word.downcase) == nil
     end
 
     def self.get_coords_in_direction(coordinate, direction, group=[])
