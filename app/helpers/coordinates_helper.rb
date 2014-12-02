@@ -1,7 +1,21 @@
 module CoordinatesHelper
   class VerifyWord
     def self.valid_placement?(coordinates)
-      get_neighbors(coordinates)
+      if check_placement(coordinates)
+        get_neighbors(coordinates)
+      end
+    end
+
+    def self.get_neighbors(coordinates)
+      filled_neighbors = coordinates.map {|coord| coord.friends - coordinates}
+      filled_neighbors.each do |neighbor|
+        p neighbor
+        puts
+      end
+      return true
+    end
+
+    def self.check_placement(coordinates)
       coordinates.map {|coord| [coord.vertical, coord.horizontal]}
       (1...coordinates.length).each do |index|
         previous = [coordinates[index-1].vertical, coordinates[index-1].horizontal]
@@ -9,16 +23,6 @@ module CoordinatesHelper
         return false if test_all(current, previous) == false
       end
       return true
-    end
-
-    def self.get_neighbors(coordinates)
-      p "STARTING HEREEEEEE!"
-      filled_neighbors = coordinates.map {|coord| coord.friends - coordinates}
-      filled_neighbors.each do |neighbor|
-        p neighbor
-        puts
-        puts
-      end
     end
 
     def self.test_all(current, previous)
