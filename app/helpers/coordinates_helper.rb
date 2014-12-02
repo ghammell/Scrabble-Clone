@@ -21,13 +21,15 @@ module CoordinatesHelper
     def self.check_horizontal(coordinate)
       full_word = get_coords_in_direction(coordinate, -1, 0) + get_coords_in_direction(coordinate, 1, 0)
       word = full_word.uniq.map {|coord| coord.letter}.join
-      check_dictionary(word.downcase) == nil ? false : word
+      dict_result = check_dictionary(word.downcase)
+      dict_result == nil ? false : dict_result
     end
 
     def self.check_vertical(coordinate)
       full_word = get_coords_in_direction(coordinate, 0, -1) + get_coords_in_direction(coordinate, 0, 1)
       word = full_word.uniq.map {|coord| coord.letter}.join
-      check_dictionary(word.downcase) == nil ? false : word
+      dict_result = check_dictionary(word.downcase)
+      dict_result == nil ? false : dict_result
     end
 
     def self.get_coords_in_direction(coordinate, v_direction, h_direction, group=[])
