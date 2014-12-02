@@ -65,6 +65,8 @@ module CoordinatesHelper
 
   def self.update_neighbors(game_id, coordinate)
     game = Game.find(game_id)
-    coordinate.neighbors = get_neighbor_coordinates(game, coordinate)
+    if coordinate.neighbors == []
+      coordinate.neighbors = get_neighbor_coordinates(game, coordinate)
+    end
   end
 end
