@@ -7,15 +7,24 @@ module CoordinatesHelper
     end
 
     def self.check_connection_words(coordinates)
-      words = []
+      v_words = []
+      h_words = []
       coordinates.each do |coord|
         h_response = check_horizontal(coord)
-        h_response == false ? (return false) : words << h_response
+        if h_response == false
+          return false
+        elsif h_words.include?(h_response) == false
+          h_words << h_response
+        end
 
         v_response = check_vertical(coord)
-        v_response == false ? (return false) : words << v_response
+        if v_response == false
+          return false
+        elsif v_words.include?(v_response) == false
+          v_words << v_response
+        end
       end
-      words
+      (v_words + h_words).select {|dict_word| dict_word.word.length > 1}
     end
 
     def self.check_horizontal(coordinate)
