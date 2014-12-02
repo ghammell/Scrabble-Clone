@@ -4,8 +4,7 @@ class CoordinatesController < ApplicationController
   def update_letter
     @coordinate = Coordinate.find(params["id"])
     @coordinate.update_attribute('letter', params["value"].squish)
-    @droppable_ids = determine_droppable_coordinates.map{|coord| coord.id}
-
+    @droppable_ids = CoordinatesHelper.determine_droppable_coordinates(session[:game]).map{|coord| coord.id}
     update_word(@coordinate)
   end
 
@@ -16,7 +15,7 @@ class CoordinatesController < ApplicationController
     if CoordinatesHelper::VerifyWord.valid_placement?(sorted_coordinates)
       @result = check_dictionary(word)
       if @result
-        @droppable_ids = determine_droppable_coordinates.map{|coord| coord.id}
+        @droppable_ids = CoordinatesHelper.determine_droppable_coordinates(session[:game]).map{|coord| coord.id}
         @points = @result.points
         update_player_session
         @letters = get_letters(@coordinates.length).map {|letter| ('A'..'Z').to_a.index(letter)}
@@ -27,32 +26,6 @@ class CoordinatesController < ApplicationController
     else
       @errors = "Sorry, that placemenent is invalid."
     end
-  end
-
-  def determine_droppable_coordinates
-    game = Game.find(session[:game])
-    taken = game.coordinates.select {|coord| coord.letter != ''}
-    available = taken.map {|coord| get_available_based_off_single_coordinate(game, coord)}.flatten.uniq
-    if available == []
-      game.coordinates
-    else
-      available
-    end
-  end
-
-  def get_available_based_off_single_coordinate(game, coordinate)
-    ul = [coordinate.horizontal - 1, coordinate.vertical - 1]
-    u = [coordinate.horizontal, coordinate.vertical - 1]
-    ur = [coordinate.horizontal + 1, coordinate.vertical - 1 ]
-    r = [coordinate.horizontal + 1, coordinate.vertical]
-    dr = [coordinate.horizontal + 1, coordinate.vertical + 1]
-    d = [coordinate.horizontal, coordinate.vertical + 1]
-    dl = [coordinate.horizontal - 1, coordinate.vertical + 1]
-    l = [coordinate.horizontal - 1, coordinate.vertical]
-
-    near_by = [ul, u, ur, r, dr, d, dl, l]
-    near_by.map! {|position| game.coordinates.find_by(horizontal: position[0], vertical: position[1])}
-    near_by.compact.select {|coord| coord.letter == ''}
   end
 
   def update_player_session
@@ -83,7 +56,7 @@ class CoordinatesController < ApplicationController
     @letters = session[:current_word].map {|hash| ('A'..'Z').to_a.index(hash['letter'])}
     @player = session[:player]
     session[:current_word] = []
-    @droppable_ids = determine_droppable_coordinates.map{|coord| coord.id}
+    @droppable_ids = CoordinatesHelper.determine_droppable_coordinates(session[:game]).map{|coord| coord.id}
   end
 
   def update_word(coordinate)
