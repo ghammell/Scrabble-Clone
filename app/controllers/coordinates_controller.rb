@@ -22,7 +22,7 @@ class CoordinatesController < ApplicationController
         @letters = get_letters(@coordinates.length).map {|letter| ('A'..'Z').to_a.index(letter)}
         session[:current_word] = []
       else
-        @errors = "Sorry, that composition does not work."
+        @errors = "Sorry, that word doesn't work, or it's connections don't work."
       end
     else
       @errors = "Sorry, that placemenent is invalid."
