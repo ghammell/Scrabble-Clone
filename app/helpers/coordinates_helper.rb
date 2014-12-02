@@ -1,7 +1,7 @@
 module CoordinatesHelper
   class VerifyWord
     def self.valid_placement?(coordinates)
-      if check_placement(coordinates)
+      if check_placement(sort_coords(coordinates))
         check_connection_words(coordinates)
       end
     end
@@ -50,10 +50,6 @@ module CoordinatesHelper
 
     def self.get_neighbors(coordinate, coordinates)
       filled_neighbors = coordinates.map {|coord| coord.friends - coordinates}
-      filled_neighbors.each do |neighbor|
-        p neighbor
-        puts
-      end
       return true
     end
 
@@ -77,8 +73,7 @@ module CoordinatesHelper
 
     def self.test_all(current, previous)
       return true if test_vertical(current, previous) == true
-      return true if test_horizontal(current, previous) == true
-      return test_diagonal(current, previous)
+      return test_horizontal(current, previous)
     end
 
     def self.test_vertical(current, previous)
@@ -87,10 +82,6 @@ module CoordinatesHelper
 
     def self.test_horizontal(current, previous)
       (current[0] == previous[0] + 1) && (current[1] == previous[1])
-    end
-
-    def self.test_diagonal(current, previous)
-      (current[0] == previous[0] + 1) && (current[1] == previous[1] + 1)
     end
   end
 
@@ -106,16 +97,12 @@ module CoordinatesHelper
   end
 
   def self.get_neighbor_coordinates(game, coordinate)
-    ul = [coordinate.horizontal - 1, coordinate.vertical - 1]
     u = [coordinate.horizontal, coordinate.vertical - 1]
-    ur = [coordinate.horizontal + 1, coordinate.vertical - 1 ]
     r = [coordinate.horizontal + 1, coordinate.vertical]
-    dr = [coordinate.horizontal + 1, coordinate.vertical + 1]
     d = [coordinate.horizontal, coordinate.vertical + 1]
-    dl = [coordinate.horizontal - 1, coordinate.vertical + 1]
     l = [coordinate.horizontal - 1, coordinate.vertical]
 
-    near_by = [ul, u, ur, r, dr, d, dl, l]
+    near_by = [u, r, d, l]
     near_by.map! {|position| game.coordinates.find_by(horizontal: position[0], vertical: position[1])}.compact
   end
 
