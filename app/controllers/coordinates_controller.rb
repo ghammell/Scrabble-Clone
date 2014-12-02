@@ -3,6 +3,7 @@ class CoordinatesController < ApplicationController
 
   def update_letter
     @coordinate = Coordinate.find(params["id"])
+    CoordinatesHelper.update_neighbors(session[:game], @coordinate)
     @coordinate.update_attribute('letter', params["value"].squish)
     @droppable_ids = CoordinatesHelper.determine_droppable_coordinates(session[:game]).map{|coord| coord.id}
     update_word(@coordinate)

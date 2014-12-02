@@ -1,6 +1,7 @@
 module CoordinatesHelper
   class VerifyWord
     def self.valid_placement?(coordinates)
+      # get_neighbors(coordinates)
       coordinates.map {|coord| [coord.vertical, coord.horizontal]}
       (1...coordinates.length).each do |index|
         previous = [coordinates[index-1].vertical, coordinates[index-1].horizontal]
@@ -8,6 +9,10 @@ module CoordinatesHelper
         return false if test_all(current, previous) == false
       end
       return true
+    end
+
+    def self.get_neighbors(coordinates)
+
     end
 
     def self.test_all(current, previous)
@@ -32,7 +37,7 @@ module CoordinatesHelper
   def self.determine_droppable_coordinates(game_id)
     game = Game.find(game_id)
     taken = game.coordinates.select {|coord| coord.letter != ''}
-    available = taken.map {|coord| get_available_from_coordinate(game, coord)}.flatten.uniq
+    available = taken.map {|coord| get_available_neighbors(game, coord)}.flatten.uniq
     if available == []
       game.coordinates
     else
@@ -40,7 +45,7 @@ module CoordinatesHelper
     end
   end
 
-  def self.get_available_from_coordinate(game, coordinate)
+  def self.get_neighbor_coordinates(game, coordinate)
     ul = [coordinate.horizontal - 1, coordinate.vertical - 1]
     u = [coordinate.horizontal, coordinate.vertical - 1]
     ur = [coordinate.horizontal + 1, coordinate.vertical - 1 ]
@@ -52,6 +57,14 @@ module CoordinatesHelper
 
     near_by = [ul, u, ur, r, dr, d, dl, l]
     near_by.map! {|position| game.coordinates.find_by(horizontal: position[0], vertical: position[1])}
-    near_by.compact.select {|coord| coord.letter == ''}
+  end
+
+  def self.get_available_neighbors(game, coordinate)
+    get_neighbor_coordinates(game, coordinate).compact.select {|coord| coord.letter == ''}
+  end
+
+  def self.update_neighbors(game_id, coordinate)
+    game = Game.find(game_id)
+    coordinate.neighbors = get_neighbor_coordinates(game, coordinate)
   end
 end
