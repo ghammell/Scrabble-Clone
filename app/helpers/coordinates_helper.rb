@@ -2,17 +2,48 @@ module CoordinatesHelper
   class VerifyWord
     def self.valid_placement?(coordinates)
       if check_placement(coordinates)
-        get_neighbors(coordinates)
+        check_connection_words(coordinates)
       end
     end
 
-    def self.get_neighbors(coordinates)
+    def self.check_connection_words(coordinates)
+      coordinates.each do |coord|
+        check_horizontal(coord)
+      end
+      return true
+    end
+
+    def self.check_horizontal(coordinate)
+      full_word = get_coords_in_direction(coordinate, -1) + get_coords_in_direction(coordinate, 1)
+      puts
+      puts
+      p full_word.uniq.map {|coord| coord.letter}
+      puts
+      puts
+    end
+
+    def self.get_coords_in_direction(coordinate, direction, group=[])
+      group += [coordinate]
+      neighbor = coordinate.friends.find_by(horizontal: coordinate.horizontal, vertical: coordinate.vertical + direction)
+      if neighbor == nil || neighbor.letter == "" then return sort_coords(group) end
+      get_coords_in_direction(neighbor, direction, group)
+    end
+
+    def self.get_neighbors(coordinate, coordinates)
       filled_neighbors = coordinates.map {|coord| coord.friends - coordinates}
       filled_neighbors.each do |neighbor|
         p neighbor
         puts
       end
       return true
+    end
+
+    def self.check_dictionary(word)
+      DictionaryWord.find_by(word: word)
+    end
+
+    def self.sort_coords(coordinates)
+      coordinates.sort_by {|coord| coord.vertical}.sort_by{|coord| coord.horizontal}
     end
 
     def self.check_placement(coordinates)
@@ -73,10 +104,10 @@ module CoordinatesHelper
     get_neighbor_coordinates(game, coordinate).select {|coord| coord.letter == ''}
   end
 
-  def self.update_filled_neighbors(game_id, coordinate)
+  def self.update_neighbors(game_id, coordinate)
     game = Game.find(game_id)
     if coordinate.friends == []
-      coordinate.friends = get_neighbor_coordinates(game, coordinate).select {|coord| coord.letter != ""}
+      coordinate.friends = get_neighbor_coordinates(game, coordinate)
     end
   end
 end

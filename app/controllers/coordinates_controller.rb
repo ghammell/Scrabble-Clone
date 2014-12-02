@@ -3,7 +3,7 @@ class CoordinatesController < ApplicationController
 
   def update_letter
     @coordinate = Coordinate.find(params["id"])
-    CoordinatesHelper.update_filled_neighbors(session[:game], @coordinate)
+    CoordinatesHelper.update_neighbors(session[:game], @coordinate)
     @coordinate.update_attribute('letter', params["value"].squish)
     @droppable_ids = CoordinatesHelper.determine_droppable_coordinates(session[:game]).map{|coord| coord.id}
     update_word(@coordinate)
@@ -11,10 +11,10 @@ class CoordinatesController < ApplicationController
 
   def submit_word
     @coordinates = session[:current_word].map {|hash| Coordinate.find(hash['id'])}
-    sorted_coordinates = sort_coords(@coordinates)
+    sorted_coordinates = CoordinatesHelper::VerifyWord.sort_coords(@coordinates)
     @word = sorted_coordinates.map {|coord| coord.letter}.join.downcase
     if CoordinatesHelper::VerifyWord.valid_placement?(sorted_coordinates)
-      @result = check_dictionary(@word)
+      @result = CoordinatesHelper::VerifyWord.check_dictionary(@word)
       if @result
         @droppable_ids = CoordinatesHelper.determine_droppable_coordinates(session[:game]).map{|coord| coord.id}
         @points = @result.points
@@ -43,13 +43,7 @@ class CoordinatesController < ApplicationController
     (0...num).map {|num| ('A'..'Z').to_a.sample}
   end
 
-  def sort_coords(coordinates)
-    coordinates.sort_by {|coord| coord.vertical}.sort_by{|coord| coord.horizontal}
-  end
 
-  def check_dictionary(word)
-    DictionaryWord.find_by(word: word)
-  end
 
   def reset_word
     session[:current_word].each {|hash| Coordinate.find(hash['id']).update_attribute('letter', '')}
