@@ -19,9 +19,10 @@ ActiveRecord::Schema.define(version: 20141126202016) do
   create_table "coordinates", force: true do |t|
     t.integer  "horizontal"
     t.integer  "vertical"
-    t.string   "letter",     default: ""
+    t.string   "letter",      default: ""
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "neighbor_id"
     t.integer  "game_id"
   end
 
