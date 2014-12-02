@@ -41,6 +41,10 @@
 .hand {
   text-align: center;
 
+  .successful_words {
+    display: none;
+  }
+
   ul {
     padding: 0;
     li {
@@ -58,7 +62,7 @@
 }
 
 #p1_hand, #p2_hand {
-  position: fixed;
+  position: absolute;
   top: 100px;
   display: none;
 }

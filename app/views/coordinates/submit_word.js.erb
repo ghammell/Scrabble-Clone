@@ -32,11 +32,21 @@ var add_points = {
   }
 }
 
+var add_word = {
+  word: "<%= @word %>",
+  points: <%= @points %>,
+  add: function() {
+    $(hand + ' .successful_words').slideDown()
+    $(hand + ' .successful_words .words').prepend("<span>" + this.word + ": " + this.points + "pts</span><br>")
+  }
+}
+
 add_points.add()
 add_letters.add()
+add_word.add()
 
-$(hand + ' .word_buttons').fadeOut()
-$(nextPlayerHand + ' .word_buttons').fadeIn()
+$(hand + ' .word_buttons').slideUp()
+$(nextPlayerHand + ' .word_buttons').slideDown()
 
 
 if (points >= 0) {

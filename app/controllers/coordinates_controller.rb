@@ -11,9 +11,9 @@ class CoordinatesController < ApplicationController
   def submit_word
     @coordinates = session[:current_word].map {|hash| Coordinate.find(hash['id'])}
     sorted_coordinates = sort_coords(@coordinates)
-    word = sorted_coordinates.map {|coord| coord.letter}.join.downcase
+    @word = sorted_coordinates.map {|coord| coord.letter}.join.downcase
     if CoordinatesHelper::VerifyWord.valid_placement?(sorted_coordinates)
-      @result = check_dictionary(word)
+      @result = check_dictionary(@word)
       if @result
         @droppable_ids = CoordinatesHelper.determine_droppable_coordinates(session[:game]).map{|coord| coord.id}
         @points = @result.points
