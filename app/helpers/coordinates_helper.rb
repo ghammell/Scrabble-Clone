@@ -1,7 +1,7 @@
 module CoordinatesHelper
   class VerifyWord
     def self.valid_placement?(coordinates)
-      # get_neighbors(coordinates)
+      get_neighbors(coordinates)
       coordinates.map {|coord| [coord.vertical, coord.horizontal]}
       (1...coordinates.length).each do |index|
         previous = [coordinates[index-1].vertical, coordinates[index-1].horizontal]
@@ -12,7 +12,13 @@ module CoordinatesHelper
     end
 
     def self.get_neighbors(coordinates)
-
+      p "STARTING HEREEEEEE!"
+      filled_neighbors = coordinates.map {|coord| coord.friends - coordinates}
+      filled_neighbors.each do |neighbor|
+        p neighbor
+        puts
+        puts
+      end
     end
 
     def self.test_all(current, previous)
@@ -56,17 +62,17 @@ module CoordinatesHelper
     l = [coordinate.horizontal - 1, coordinate.vertical]
 
     near_by = [ul, u, ur, r, dr, d, dl, l]
-    near_by.map! {|position| game.coordinates.find_by(horizontal: position[0], vertical: position[1])}
+    near_by.map! {|position| game.coordinates.find_by(horizontal: position[0], vertical: position[1])}.compact
   end
 
   def self.get_available_neighbors(game, coordinate)
-    get_neighbor_coordinates(game, coordinate).compact.select {|coord| coord.letter == ''}
+    get_neighbor_coordinates(game, coordinate).select {|coord| coord.letter == ''}
   end
 
-  def self.update_neighbors(game_id, coordinate)
+  def self.update_filled_neighbors(game_id, coordinate)
     game = Game.find(game_id)
-    if coordinate.neighbors == []
-      coordinate.neighbors = get_neighbor_coordinates(game, coordinate)
+    if coordinate.friends == []
+      coordinate.friends = get_neighbor_coordinates(game, coordinate).select {|coord| coord.letter != ""}
     end
   end
 end
