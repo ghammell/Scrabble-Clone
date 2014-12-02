@@ -1,9 +1,9 @@
 module CoordinatesHelper
   class VerifyWord
     def self.valid_placement?(coordinates)
-      if check_placement(sort_coords(coordinates))
+      # if check_placement(sort_coords(coordinates))
         check_connection_words(coordinates)
-      end
+      # end
     end
 
     def self.check_connection_words(coordinates)
