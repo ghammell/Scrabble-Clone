@@ -7,23 +7,34 @@ module CoordinatesHelper
     end
 
     def self.check_connection_words(coordinates)
+      words = []
       coordinates.each do |coord|
-        return false if check_horizontal(coord) == false
+        h_response = check_horizontal(coord)
+        h_response == false ? (return false) : words << h_response
+
+        v_response = check_vertical(coord)
+        v_response == false ? (return false) : words << v_response
       end
-      return true
+      words
     end
 
     def self.check_horizontal(coordinate)
-      full_word = get_coords_in_direction(coordinate, -1) + get_coords_in_direction(coordinate, 1)
+      full_word = get_coords_in_direction(coordinate, -1, 0) + get_coords_in_direction(coordinate, 1, 0)
       word = full_word.uniq.map {|coord| coord.letter}.join
-      return false if check_dictionary(word.downcase) == nil
+      check_dictionary(word.downcase) == nil ? false : word
     end
 
-    def self.get_coords_in_direction(coordinate, direction, group=[])
+    def self.check_vertical(coordinate)
+      full_word = get_coords_in_direction(coordinate, 0, -1) + get_coords_in_direction(coordinate, 0, 1)
+      word = full_word.uniq.map {|coord| coord.letter}.join
+      check_dictionary(word.downcase) == nil ? false : word
+    end
+
+    def self.get_coords_in_direction(coordinate, v_direction, h_direction, group=[])
       group += [coordinate]
-      neighbor = coordinate.friends.find_by(horizontal: coordinate.horizontal, vertical: coordinate.vertical + direction)
+      neighbor = coordinate.friends.find_by(horizontal: coordinate.horizontal + h_direction, vertical: coordinate.vertical + v_direction)
       if neighbor == nil || neighbor.letter == "" then return sort_coords(group) end
-      get_coords_in_direction(neighbor, direction, group)
+      get_coords_in_direction(neighbor, v_direction, h_direction, group)
     end
 
     def self.get_neighbors(coordinate, coordinates)
