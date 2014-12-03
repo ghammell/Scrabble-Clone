@@ -19,4 +19,4 @@ class DictionarySeeder
   end
 end
 
-DictionarySeeder.new('/usr/share/dict/words').seed
+DictionarySeeder.new('public/dictionary').seed
