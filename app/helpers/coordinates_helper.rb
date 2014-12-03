@@ -1,9 +1,9 @@
 module CoordinatesHelper
   class VerifyWord
     def self.valid_placement?(coordinates)
-      # if check_placement(sort_coords(coordinates))
+      if check_placement(sort_coords(coordinates))
         check_connection_words(coordinates)
-      # end
+      end
     end
 
     def self.check_connection_words(coordinates)
@@ -59,6 +59,34 @@ module CoordinatesHelper
 
     def self.sort_coords(coordinates)
       coordinates.sort_by {|coord| coord.vertical}.sort_by{|coord| coord.horizontal}
+    end
+
+    def self.check_placement(coordinates)
+      game = coordinates.first.game
+      if coordinates.first.vertical == coordinates.last.vertical
+        same_column = true
+      elsif coordinates.first.horizontal == coordinates.last.horizontal
+        same_row = true
+      else
+        return false
+      end
+
+      if same_column
+        return false if check_in_between_column(coordinates.first, coordinates.last, game) == false
+      else
+        return false if check_in_between_row(coordinates.first, coordinates.last, game) == false
+      end
+      return true
+    end
+
+    def self.check_in_between_column(first, last, game)
+      coords = (first.horizontal..last.horizontal).map {|h_position| game.coordinates.find_by(horizontal: h_position, vertical: first.vertical)}
+      coords.each {|coord| return false if coord.letter == ''}
+    end
+
+    def self.check_in_between_row(first, last, game)
+      coords = (first.vertical..last.vertical).map {|v_position| game.coordinates.find_by(horizontal: first.horizontal, vertical: v_position)}
+      coords.each {|coord| return false if coord.letter == ''}
     end
 
     # def self.check_placement(coordinates)
