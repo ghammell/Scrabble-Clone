@@ -8,6 +8,7 @@
   display: table;
   padding: 10px;
   display: none;
+  box-shadow: 0 0 10px black;
 
   .coordinate {
     color: #FFE1AA;
@@ -43,6 +44,9 @@
   border-radius: 5px;
   padding: 20px;
   text-align: center;
+  background-color: white;
+  color: black;
+  box-shadow: 0 0 10px black;
 
   h2 {
     margin-top: 0;
@@ -76,7 +80,7 @@
 
 #p1_hand, #p2_hand {
   position: absolute;
-  top: 100px;
+  top: 150px;
   display: none;
 }
 
