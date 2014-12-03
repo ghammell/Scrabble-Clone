@@ -43,6 +43,12 @@
 
   .successful_words {
     display: none;
+
+    .words {
+      span {
+        /*display: none;*/
+      }
+    }
   }
 
   ul {

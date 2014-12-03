@@ -45,10 +45,11 @@ var add_results = {
 }
 
 add_results.addTotal()
-add_results.addWords()
 add_letters.add()
 
-$(hand + ' .word_buttons').slideUp()
+$(hand + ' .word_buttons').slideUp( function() {
+  add_results.addWords()
+})
 $(nextPlayerHand + ' .word_buttons').slideDown()
 
 if (add_results.totalPoints() >= 0) {
