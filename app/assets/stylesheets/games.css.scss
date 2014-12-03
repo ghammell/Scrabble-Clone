@@ -39,7 +39,14 @@
 }
 
 .hand {
+  border: 1px solid white;
+  border-radius: 5px;
+  padding: 20px;
   text-align: center;
+
+  h2 {
+    margin-top: 0;
+  }
 
   .successful_words {
     display: none;
