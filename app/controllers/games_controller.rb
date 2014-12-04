@@ -4,6 +4,7 @@ class GamesController < ApplicationController
   def create
     @game = Game.create
     @coordinates = @game.coordinates.sort_by {|coord| coord.id}
+    @start_coordinate = @coordinates[@coordinates.length / 2]
     @p1_hand = get_hand(7)
     @p2_hand = get_hand(7)
     session[:current_word] = []

@@ -118,7 +118,8 @@ module CoordinatesHelper
     taken = game.coordinates.select {|coord| coord.letter != ''}
     available = taken.map {|coord| get_available_neighbors(game, coord)}.flatten.uniq
     if available == []
-      game.coordinates
+      coordinates = game.coordinates.sort_by {|coord| coord.id}
+      [coordinates[coordinates.length / 2]]
     else
       available
     end
