@@ -1,7 +1,11 @@
 <%= div_for coordinate do %>
-  <span class='coordinate_letter'>X</span>
-  <span class="multiplier"><%= coordinate.multiplier %></span>
-  <span class="multiple">x <%= coordinate.multiple %></span>
+  <!-- <span class='coordinate_letter'>X</span> -->
+  <% if coordinate.multiple != nil %>
+    <div class="multiple_info">
+      <p class="multiplier"><%= coordinate.multiplier %></p>
+      <p class="multiple">x<%= coordinate.multiple %></p>
+    </div>
+  <% end %>
 <% end %>
 <% if coordinate.vertical == 14 %>
   <br>

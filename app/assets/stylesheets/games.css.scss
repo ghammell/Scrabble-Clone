@@ -12,13 +12,25 @@
 
   .coordinate {
     color: #FFE1AA;
-    width: 25px;
+    width: 50px;
+    height: 50px;
+    overflow: auto;
     text-align: center;
     background-color: #FFE1AA;
     border: 1px solid #805A15;
     display: inline-block;
     font-size: 20px;
-    padding: 10px;
+    /*padding: 10px;*/
+
+    .multiple_info {
+      text-align: center;
+      /*float: left;*/
+      .multiplier, .multiple {
+        font-size: 10px !important;
+        color: black !important;
+        margin: 0;
+      }
+    }
   }
 }
 
