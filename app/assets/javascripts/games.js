@@ -27,7 +27,7 @@ var BindDroppable = function(selector) {
       new_text = ui.draggable.text()
       $(ui.draggable).remove()
       $(this).droppable('disable')
-      $(this).find('span').text( new_text ).css('color', 'white')
+      $(this).find('.coordinate_letter').text( new_text ).css('color', 'white')
       $(this).css('background-color', '#9A2525')
       $(this).effect('highlight', {color: 'black'}, 1000)
       $(this).addClass('taken')

@@ -20,6 +20,8 @@ ActiveRecord::Schema.define(version: 20141202060330) do
     t.integer  "horizontal"
     t.integer  "vertical"
     t.string   "letter",     default: ""
+    t.string   "multiplier"
+    t.integer  "multiple"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "game_id"
