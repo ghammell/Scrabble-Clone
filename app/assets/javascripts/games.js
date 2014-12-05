@@ -10,12 +10,13 @@ var BindDraggable = function(selector) {
     revert: 'invalid',
     snap: false,
     opacity: 0.9,
-    drag: function() {
+    start: function() {
       $('.ui-droppable:not(.ui-droppable-disabled)').css('background-color', '#8998BB')
       $('.ui-droppable:not(.ui-droppable-disabled) span').css('color', '#8998BB')
     },
     stop: function() {
-      $('.ui-droppable:not(.taken)').css('background-color', '#FFE1AA')
+      $('.ui-droppable:not(.taken, .multiple_div)').css('background-color', '#FFE1AA')
+      $('.multiple_div').css('background-color', '#95c2a6')
       $('.ui-droppable:not(.taken) span').css('color', '#FFE1AA')
     }
   })

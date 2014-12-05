@@ -14,8 +14,10 @@ var reset_ids = {
       $(coordinate_div).droppable('enable')
       if ($(coordinate_div).hasClass('multiple_div') === false) {
         $(coordinate_div).find('span').text('X').css('color', '#FFE1AA')
+        $(coordinate_div).css('background-color', '#FFE1AA')
+      } else {
+        $(coordinate_div).css('background-color', '#95c2a6')
       }
-      $(coordinate_div).css('background-color', '#FFE1AA')
     }
   }
 }

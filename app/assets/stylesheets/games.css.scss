@@ -10,6 +10,19 @@
   display: none;
   box-shadow: 0 0 10px black;
 
+  .coordinate {
+    transition: background-color 0.2s;
+    span {
+      transition: color 0.2s;
+    }
+  }
+
+  .taken {
+    span {
+      color: white !important;
+    }
+  }
+
   #coordinates {
     display: table;
   }
@@ -19,9 +32,23 @@
     outline-offset: -3px;
   }
 
+  .multiple_div, .non_multiple_div {
+    width: 25px;
+    height: 23px;
+    padding: 10px;
+    display: inline-flex;
+    text-align: center;
+    border: 1px solid #805A15;
+    font-size: 20px;
+
+    span {
+      margin: 0 auto;
+    }
+  }
+
   .multiple_div {
-    background-color: #95c2a6 !important;
-    color: white !important;
+    background-color: #95c2a6;
+    color: white;
     outline: 1px dashed white;
     outline-offset: -3px;
 
@@ -43,21 +70,9 @@
     }
   }
 
-  .coordinate {
+  .non_multiple_div {
     color: #FFE1AA;
-    width: 25px;
-    height: 23px;
-    /*overflow: auto;*/
-    text-align: center;
     background-color: #FFE1AA;
-    border: 1px solid #805A15;
-    display: inline-flex;
-    font-size: 20px;
-    padding: 10px;
-
-    span {
-      margin: 0 auto;
-    }
   }
 }
 
