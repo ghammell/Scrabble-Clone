@@ -44,6 +44,19 @@ var add_results = {
   }
 }
 
+var update_multiplier_divs = {
+  coordinates: <%= @coordinate_ids %>,
+  update: function() {
+    for(i=0; i < this.coordinates.length; i++) {
+      coord_div = $('#coordinate_' + this.coordinates[i])
+      if (coord_div.hasClass('multiple_div')) {
+        coord_div.removeClass('multiple_div')
+        coord_div.addClass('taken_multiple')
+      }
+    }
+  }
+}
+
 add_results.addTotal()
 add_letters.add()
 
@@ -55,6 +68,7 @@ $(nextPlayerHand + ' .word_buttons').slideDown()
 if (add_results.totalPoints() >= 0) {
   $(hand + ' .letter').removeClass('draggable ui-draggable ui-draggable-handle')
   $(nextPlayerHand + ' .letter').addClass('draggable')
+  update_multiplier_divs.update()
 }
 
 BindDraggable('.draggable')

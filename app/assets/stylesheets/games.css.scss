@@ -14,6 +14,11 @@
     display: table;
   }
 
+  .taken_multiple {
+    outline: 1px dashed white;
+    outline-offset: -3px;
+  }
+
   .multiple_div {
     background-color: #95c2a6 !important;
     color: white !important;

@@ -9,8 +9,12 @@ var reset_ids = {
     for (i=0; i < this.ids.length; i++) {
       coordinate_div = '#coordinate_' + this.ids[i]
       $(coordinate_div).removeClass('taken')
+      $(coordinate_div).find('.taken_letter').remove()
+      $(coordinate_div).find('.multiple_info, span').show()
       $(coordinate_div).droppable('enable')
-      $(coordinate_div).find('span').text('X').css('color', '#FFE1AA')
+      if ($(coordinate_div).hasClass('multiple_div') === false) {
+        $(coordinate_div).find('span').text('X').css('color', '#FFE1AA')
+      }
       $(coordinate_div).css('background-color', '#FFE1AA')
     }
   }
