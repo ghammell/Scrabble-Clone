@@ -16,7 +16,7 @@ var BindDraggable = function(selector) {
     },
     stop: function() {
       $('.ui-droppable:not(.taken, .multiple_div)').css('background-color', '#FFE1AA')
-      $('.multiple_div').css('background-color', '#95c2a6')
+      $('.multiple_div:not(.taken)').css('background-color', '#95c2a6')
       $('.ui-droppable:not(.taken) span').css('color', '#FFE1AA')
     }
   })
