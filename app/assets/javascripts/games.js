@@ -1,7 +1,30 @@
 $(document).ready(function(){
 })
 
+var BindShuffleButtons = function() {
+  $('.shuffle_button').click( function() {
+    parent = $(this).parent().siblings('.hand_letters')
+    divs = parent.children()
+    while (divs.length) {
+        parent.append(divs.splice(Math.floor(Math.random() * divs.length), 1)[0]);
+    }
+  })
+}
+
 var alphabet = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
+
+var calcPointsForLetter = function(letter) {
+  difficult = ['X','Y','Z','Q']
+  easy = ['A', 'E', 'I', 'O', 'U', 'Y']
+  moderate = $(difficult).not(easy).get()
+  if ( $.inArray(letter, difficult) > -1 ) {
+    return 3
+  } else if ( $.inArray(letter, easy) > -1) {
+    return 1
+  } else {
+    return 2
+  }
+}
 
 var BindDraggable = function(selector) {
   $(selector).draggable({
