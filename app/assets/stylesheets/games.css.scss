@@ -5,32 +5,49 @@
 .game {
   background-color: #553700;
   margin: 0 auto;
-  display: table;
+  /*display: table;*/
   padding: 10px;
   display: none;
   box-shadow: 0 0 10px black;
 
-  .coordinate {
-    color: #FFE1AA;
-    width: 50px;
-    height: 50px;
-    overflow: auto;
-    text-align: center;
-    background-color: #FFE1AA;
-    border: 1px solid #805A15;
-    display: inline-block;
-    font-size: 20px;
-    /*padding: 10px;*/
+  #coordinates {
+    display: table;
+  }
+
+  .multiple_div {
+    background-color: #95c2a6 !important;
+    border: 1px dashed white !important;
+    color: white !important;
 
     .multiple_info {
       text-align: center;
-      /*float: left;*/
+      overflow: scroll;
+
+      .scroll {
+        position: relative;
+        top: 0px;
+        transition: top 0.2s;
+      }
+
+      .scroll:hover {
+        top: -25px;
+      }
       .multiplier, .multiple {
-        font-size: 10px !important;
-        color: black !important;
-        margin: 0;
       }
     }
+  }
+
+  .coordinate {
+    color: #FFE1AA;
+    width: 25px;
+    height: 25px;
+    /*overflow: auto;*/
+    text-align: center;
+    background-color: #FFE1AA;
+    border: 1px solid #805A15;
+    display: inline-flex;
+    font-size: 20px;
+    padding: 10px;
   }
 }
 

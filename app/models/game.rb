@@ -11,10 +11,10 @@ class Game < ActiveRecord::Base
         if mult_spots.include?(coordinate.vertical) && mult_spots.include?(coordinate.horizontal)
           coordinate.multiple = rand(3) + 1
           if i == 0
-            coordinate.multiplier = 'word'
+            coordinate.multiplier = 'W'
             i = 1
           else
-            coordinate.multiplier = 'letter'
+            coordinate.multiplier = 'L'
             i = 0
           end
         end
