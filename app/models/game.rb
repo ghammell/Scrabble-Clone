@@ -13,10 +13,10 @@ class Game < ActiveRecord::Base
           unless count == 112
             coordinate.update_attribute("multiple", (2..4).to_a.sample)
             if i == 0
-              coordinate.multiplier = 'W'
+              coordinate.update_attribute("multiplier", 'W')
               i = 1
             else
-              coordinate.multiplier = 'L'
+              coordinate.update_attribute("multiplier", 'L')
               i = 0
             end
           end
