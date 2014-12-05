@@ -16,13 +16,13 @@
 
   .multiple_div {
     background-color: #95c2a6 !important;
-    border: 1px dashed white !important;
     color: white !important;
+    outline: 1px dashed white;
+    outline-offset: -3px;
 
     .multiple_info {
       text-align: center;
-      overflow: scroll;
-
+      overflow: hidden;
       .scroll {
         position: relative;
         top: 0px;
