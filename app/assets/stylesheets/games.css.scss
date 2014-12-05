@@ -28,8 +28,8 @@
   }
 
   .taken_multiple {
-    outline: 1px dashed white;
-    outline-offset: -3px;
+    outline: 1px dashed white !important;
+    outline-offset: -3px !important;
   }
 
   .multiple_div, .non_multiple_div {

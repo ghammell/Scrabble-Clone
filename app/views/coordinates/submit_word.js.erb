@@ -50,7 +50,6 @@ var update_multiplier_divs = {
     for(i=0; i < this.coordinates.length; i++) {
       coord_div = $('#coordinate_' + this.coordinates[i])
       if (coord_div.hasClass('multiple_div')) {
-        coord_div.removeClass('multiple_div')
         coord_div.addClass('taken_multiple')
       }
     }

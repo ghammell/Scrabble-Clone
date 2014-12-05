@@ -37,7 +37,12 @@ var BindDroppable = function(selector) {
       UpdateCoordinate(coord_id, new_text)
     },
     accept: '.draggable',
-    hoverClass: "ui-state-hover"
+    over: function() {
+      $(this).css('background-color', 'black')
+    },
+    out: function() {
+      $(this).css('background-color', '#8998BB')
+    }
   })
 }
 
