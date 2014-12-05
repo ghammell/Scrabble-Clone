@@ -5,9 +5,12 @@ var BindShuffleButtons = function() {
   $('.shuffle_button').click( function() {
     parent = $(this).parent().siblings('.hand_letters')
     divs = parent.children()
-    while (divs.length) {
-        parent.append(divs.splice(Math.floor(Math.random() * divs.length), 1)[0]);
-    }
+    parent.fadeOut(100, function() {
+      while (divs.length) {
+          parent.append(divs.splice(Math.floor(Math.random() * divs.length), 1)[0]);
+      }
+    })
+    parent.fadeIn(100)
   })
 }
 
