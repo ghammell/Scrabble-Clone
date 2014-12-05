@@ -11,14 +11,13 @@ class CoordinatesController < ApplicationController
 
   def submit_word
     @coordinates = session[:current_word].map {|hash| Coordinate.find(hash['id'])}
-
-    @multiple_results = @coordinates.select {|coord| coord.multiplier != ''}
-
     @coordinate_ids = @coordinates.map {|coord| coord.id}
+
     @words = CoordinatesHelper::VerifyWord.valid_placement?(@coordinates)
+
     if @words
       @droppable_ids = CoordinatesHelper.determine_droppable_coordinates(session[:game]).map{|coord| coord.id}
-      @results = @words.map {|word| [word.word, word.points]}
+      @results = @words.map {|word| [word[0].word, word[0].points]}
       update_player_session
       @letters = get_letters(@coordinates.length).map {|letter| ('A'..'Z').to_a.index(letter)}
       session[:current_word] = []

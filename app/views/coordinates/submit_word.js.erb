@@ -1,5 +1,34 @@
 <%= render 'update_droppable' %>
 
+
+var test_add_results = {
+  results: JSON.parse("<%= escape_javascript (@words.to_json.html_safe) %>"),
+  totalPoints: function() {
+    var points = 0
+    for (i=0; i < this.results.length; i++){
+      for (j=0; j < this.results[i][1].length; j++) {
+        letterObject = this.results[i][1][j]
+        console.log(letterObject)
+        points += calcPointsForLetter(letterObject.letter)
+      }
+    }
+    return points
+  },
+  addResults: function() {
+    for (i=0; i < this.results.length; i++){
+      for (j=0; j < this.results[i][1].length; j++) {
+        // console.log(this.results[i])
+        console.log(this.results[i][1][j])
+      }
+    }
+  }
+}
+
+console.log(test_add_results.totalPoints())
+// test_add_results.addResults()
+// console.log(test_add_results.results)
+
+
 var player = <%= @player %>
 var nextPlayer = function() {
   if (player === 1) {

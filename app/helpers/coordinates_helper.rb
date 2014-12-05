@@ -24,21 +24,22 @@ module CoordinatesHelper
           v_words << v_response
         end
       end
-      (v_words + h_words).select {|dict_word| dict_word.word.length > 1}
+
+      (v_words + h_words).select {|dict_word| dict_word[0].word.length > 1}
     end
 
     def self.check_horizontal(coordinate)
       full_word = get_coords_in_direction(coordinate, -1, 0) + get_coords_in_direction(coordinate, 1, 0)
       word = full_word.uniq.map {|coord| coord.letter}.join
       dict_result = check_dictionary(word.downcase)
-      dict_result == nil ? false : dict_result
+      dict_result == nil ? false : [dict_result, full_word.uniq]
     end
 
     def self.check_vertical(coordinate)
       full_word = get_coords_in_direction(coordinate, 0, -1) + get_coords_in_direction(coordinate, 0, 1)
       word = full_word.uniq.map {|coord| coord.letter}.join
       dict_result = check_dictionary(word.downcase)
-      dict_result == nil ? false : dict_result
+      dict_result == nil ? false : [dict_result, full_word.uniq]
     end
 
     def self.get_coords_in_direction(coordinate, v_direction, h_direction, group=[])
