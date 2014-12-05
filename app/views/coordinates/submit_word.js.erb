@@ -37,9 +37,10 @@ var add_results = {
     $(hand).children('.score').text(currentScore + this.totalPoints())
   },
   addWords: function() {
+    $(hand + ' .successful_words').slideDown()
+    $(hand + ' .successful_words .words').prepend("<div class='word_cluster'></div>")
     for(i=0; i < this.results.length; i++) {
-      $(hand + ' .successful_words').slideDown()
-      $(hand + ' .successful_words .words').prepend("<span>" + this.results[i][0] + ": " + this.results[i][1] + "pts</span><br>")
+      $(hand + ' .word_cluster:first').prepend("<p class='word_result'>" + this.results[i][0] + ": " + this.results[i][1] + "pts</p>")
     }
   }
 }
