@@ -5,7 +5,7 @@ class CreateCoordinates < ActiveRecord::Migration
       t.integer :vertical
       t.string :letter, default: ""
       t.string :multiplier, default: ""
-      t.integer :multiple, default: 0
+      t.integer :multiple, default: ""
 
       t.timestamps
       t.belongs_to :game
