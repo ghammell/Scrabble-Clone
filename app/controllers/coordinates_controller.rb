@@ -12,7 +12,6 @@ class CoordinatesController < ApplicationController
   def submit_word
     @coordinates = session[:current_word].map {|hash| Coordinate.find(hash['id'])}
     @coordinate_ids = @coordinates.map {|coord| coord.id}
-
     @words = CoordinatesHelper::VerifyWord.valid_placement?(@coordinates)
 
     if @words
