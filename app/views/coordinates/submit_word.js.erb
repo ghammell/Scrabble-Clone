@@ -23,28 +23,6 @@ var add_letters = {
   }
 }
 
-// var add_results = {
-//   results: JSON.parse("<%= escape_javascript (@results.to_json.html_safe) %>"),
-//   totalPoints: function() {
-//     var points = 0
-//     for(i=0; i < this.results.length; i++) {
-//       points += this.results[i][1]
-//     }
-//     return points
-//   },
-//   addTotal: function() {
-//     currentScore = parseInt($(hand).children('.score').text())
-//     $(hand).children('.score').text(currentScore + this.totalPoints())
-//   },
-//   addWords: function() {
-//     $(hand + ' .successful_words').slideDown()
-//     $(hand + ' .successful_words .words').prepend("<div class='word_cluster'></div>")
-//     for(i=0; i < this.results.length; i++) {
-//       $(hand + ' .word_cluster:first').prepend("<p class='word_result'>" + this.results[i][0] + ": " + this.results[i][1] + "pts</p>")
-//     }
-//   }
-// }
-
 var add_results = {
   results: JSON.parse("<%= escape_javascript (@words.to_json.html_safe) %>"),
   wordsToAdd: [],
@@ -56,6 +34,7 @@ var add_results = {
       var word = this.results[i][0]
       letterObjects = this.results[i][1]
       points += this.pointsForWord(word, letterObjects)
+      console.log("space")
     }
     this.finalPoints = points
   },
@@ -63,20 +42,26 @@ var add_results = {
   pointsForWord: function(word, letterObjects) {
     var wordPoints = 0
     var wordMult = [1]
-    var letterMult = 1
+    var letterMults = []
     for (j=0; j < letterObjects.length; j++) {
+      currentLetterMult = 1
       letter = letterObjects[j]
       multiplier = letter.multiplier
       if (multiplier === 'W') { wordMult.push(letter.multiple) }
-      else if (multiplier === 'L') { letterMult = letter.multiple  }
-      wordPoints += calcPointsForLetter(letter.letter) * letterMult
+      else if (multiplier === 'L') {
+        currentLetterMult = letter.multiple
+        letterMults.push(currentLetterMult * calcPointsForLetter(letter.letter) - calcPointsForLetter(letter.letter))
+        }
+      console.log([letter.letter, calcPointsForLetter(letter.letter) * currentLetterMult])
+      wordPoints += calcPointsForLetter(letter.letter) * currentLetterMult
     }
 
     for (k=0; k < wordMult.length; k++) {
       wordPoints *= wordMult[k]
     }
 
-    this.wordsToAdd.push([word, wordPoints])
+    wordMult.shift()
+    this.wordsToAdd.push([word, wordPoints, wordMult, letterMults])
     return wordPoints
   },
 
@@ -89,8 +74,10 @@ var add_results = {
     for (i=0; i<this.wordsToAdd.length; i++) {
       wordObject = this.wordsToAdd[i][0]
       wordPoints = this.wordsToAdd[i][1]
+      wordMults = this.wordsToAdd[i][2].map( function(num) {return 'x' + num} ).join(", ")
+      letterMults = this.wordsToAdd[i][3].map( function(num) {return '+' + num}).join(", +")
       $(hand + ' .successful_words').slideDown()
-      $(hand + ' .word_cluster:first').prepend("<p class='word_result'>" + wordObject.word + ' ' + wordPoints + "pts</p>")
+      $(hand + ' .word_cluster:first').prepend("<p class='word_result'>" + wordObject.word + ' ' + letterMults + ' ' + wordMults + ' = ' + wordPoints + "pts</p>")
     }
   },
 
@@ -114,7 +101,6 @@ var update_multiplier_divs = {
 add_results.totalPoints()
 
 if (add_results.finalPoints >= 0) {
-  console.log(add_results.wordsToAdd)
   add_results.addClusterDiv()
   add_results.addWords()
   add_results.addTotal()
