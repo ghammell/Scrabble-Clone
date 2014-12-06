@@ -6,13 +6,29 @@ var test_add_results = {
   totalPoints: function() {
     var points = 0
     for (i=0; i < this.results.length; i++){
-      for (j=0; j < this.results[i][1].length; j++) {
-        letterObject = this.results[i][1][j]
-        console.log(letterObject)
-        points += calcPointsForLetter(letterObject.letter)
-      }
+      console.log('hey')
+      points += this.pointsForWord(this.results[i][1])
     }
     return points
+  },
+  pointsForWord: function(letterObjects) {
+    console.log(typeof letterObjects)
+    var wordPoints = 0
+    var wordMult = [1]
+    var letterMult = 1
+    for (j=0; j < letterObjects.length; j++) {
+      letter = letterObjects[j]
+      multiplier = letter.multiplier
+      if (multiplier === 'W') { wordMult.push(letter.multiple) }
+      else if (multiplier === 'L') { letterMult = letter.multiple  }
+      wordPoints += calcPointsForLetter(letter.letter) * letterMult
+    }
+
+    for (k=0; k < wordMult.length; k++) {
+      wordPoints *= wordMult[k]
+    }
+
+    return wordPoints
   },
   addResults: function() {
     for (i=0; i < this.results.length; i++){
