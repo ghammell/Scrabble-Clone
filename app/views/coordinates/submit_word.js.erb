@@ -34,7 +34,6 @@ var add_results = {
       var word = this.results[i][0]
       letterObjects = this.results[i][1]
       points += this.pointsForWord(word, letterObjects)
-      console.log("space")
     }
     this.finalPoints = points
   },
@@ -52,7 +51,6 @@ var add_results = {
         currentLetterMult = letter.multiple
         letterMults.push(currentLetterMult * calcPointsForLetter(letter.letter) - calcPointsForLetter(letter.letter))
         }
-      console.log([letter.letter, calcPointsForLetter(letter.letter) * currentLetterMult])
       wordPoints += calcPointsForLetter(letter.letter) * currentLetterMult
     }
 
