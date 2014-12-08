@@ -36,7 +36,15 @@ class CoordinatesController < ApplicationController
   end
 
   def get_letters(num)
-    (0...num).map {|num| ('A'..'Z').to_a.sample}
+    (0...num).map do |num|
+      decimal = rand()
+      vowels = ['A','E','I','O','U']
+      if decimal < 0.33
+        vowels.sample
+      else
+        (('A'..'Z').to_a - vowels).sample
+      end
+    end
   end
 
   def reset_word
