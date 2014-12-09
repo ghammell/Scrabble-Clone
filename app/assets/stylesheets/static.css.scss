@@ -10,3 +10,81 @@ header {
     text-shadow: 0 0 20px black;
   }
 }
+
+#instructions {
+  text-align: center;
+  margin: 20px auto;
+  /*background-color: black;*/
+  color: white;
+  width: 80%;
+  padding: 10px;
+
+  h4 {
+    margin: 0 0 10px 0;
+  }
+  span {
+    margin: 0;
+  }
+
+  .instruction {
+    margin: 0 auto;
+    box-shadow: 0 0 10px white;
+    border-radius: 10px;
+    background-color: #5E6767;
+    padding: 10px;
+    margin: 10px 0;
+    display: inline-table;
+
+    .points_instruction {
+      display: table-cell;
+      /*border: 1px dashed white;*/
+      margin: 0 10px;
+      padding: 10px;
+      vertical-align: middle;
+
+      .coordinate {
+        width: 25px;
+        text-align: center;
+        background-color: #FFE1AA;
+        border: 1px solid #805A15;
+        display: inline-block;
+        font-size: 20px;
+        padding: 10px;
+        transition: all 0.2s;
+        color: black;
+        /*box-shadow: 0 0 5px white;*/
+      }
+    }
+
+    .multiple_div {
+      width: 25px;
+      height: 23px;
+      padding: 10px;
+      display: inline-flex;
+      text-align: center;
+      border: 1px solid #805A15;
+      font-size: 20px;
+      background-color: #95c2a6;
+      color: white;
+      outline: 1px dashed white;
+      outline-offset: -3px;
+
+      .multiple_info {
+        text-align: center;
+        overflow: hidden;
+        .scroll {
+          position: relative;
+          top: 0px;
+          transition: top 0.2s;
+        }
+
+        .scroll:hover {
+          top: -25px;
+        }
+        .multiplier, .multiple {
+          color: white !important;
+        }
+      }
+    }
+  }
+}
