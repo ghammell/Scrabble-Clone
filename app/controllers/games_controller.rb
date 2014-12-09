@@ -16,7 +16,7 @@ class GamesController < ApplicationController
     vowels = ['A','E','I','O','U']
     alphabet = ('A'..'Z').to_a - vowels
     (0..num).map do |num|
-      if rand() < 0.33
+      if num < 3
         vowels.sample
       else
         alphabet.sample
