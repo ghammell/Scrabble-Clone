@@ -15,7 +15,13 @@ class GamesController < ApplicationController
   def get_hand(num)
     vowels = ['A','E','I','O','U']
     alphabet = ('A'..'Z').to_a - vowels
-    (0..num).map {|num| num.even? ? alphabet.sample : vowels.sample}
+    (0..num).map do |num|
+      if rand() < 0.33
+        vowels.sample
+      else
+        alphabet.sample
+      end
+    end
   end
 
   def get_letter(num)
