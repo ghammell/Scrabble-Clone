@@ -1,5 +1,12 @@
 $(document).ready(function(){
+  BindSeeRulesButton()
 })
+
+var BindSeeRulesButton = function() {
+  $('#rules_button').click( function() {
+    $('#instructions').slideToggle()
+  })
+}
 
 var BindShuffleButtons = function() {
   $('.shuffle_button').click( function() {

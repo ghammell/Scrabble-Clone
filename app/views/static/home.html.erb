@@ -1,58 +1,10 @@
 <header>
   <h1>Scrabble Clone</h1>
   <%= button_to 'New Game', games_path, :id => 'new_game_button', remote: :true %>
+  <button id='rules_button'> See Rules </button>
 </header>
 
-<div id='instructions'>
-  <h4>Rules</h4>
-  <div class='instruction'>
-    <div class='points_instruction'>
-      <div class='coordinate'>A</div>
-      <div class='coordinate'>E</div>
-      <div class='coordinate'>I</div>
-      <div class='coordinate'>O</div>
-      <div class='coordinate'>U</div>
-      <span>= 1pt</span>
-    </div>
-    <div class='points_instruction'>
-      <div class='coordinate'>X</div>
-      <div class='coordinate'>Y</div>
-      <div class='coordinate'>Z</div>
-      <div class='coordinate'>Q</div>
-      <span>= 3pts</span>
-    </div>
-    <div class='points_instruction'>
-      <span>Everything else = 2pts</span>
-    </div>
-  </div>
-  <div class='instruction'>
-    <div class='points_instruction'>
-      <div class='multiple_div'>
-      <div class="multiple_info">
-        <div class="scroll">
-          <span class="multiplier">W</span>
-          x<span class="multiple">2</span>
-        </div>
-      </div>
-      </div>
-      <span> = Word Multiplier </span>
-    </div>
-    <div class='points_instruction'>
-      <div class='multiple_div'>
-      <div class="multiple_info">
-        <div class="scroll">
-          <span class="multiplier">L</span>
-          x<span class="multiple">3</span>
-        </div>
-      </div>
-      </div>
-      <span> = Letter Multiplier </span>
-    </div>
-    <div class='points_instruction'>
-      Hover to see the multiple. <br>  Word multipliers are applied after letter multipliers.
-    </div>
-  </div>
-</div>
+<%= render :partial => 'rules' %>
 
 <div id='errors'>
 </div>

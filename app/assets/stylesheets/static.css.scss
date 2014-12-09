@@ -9,6 +9,10 @@ header {
     margin: 0;
     text-shadow: 0 0 20px black;
   }
+
+  #rules_button {
+    display: none;
+  }
 }
 
 #instructions {
@@ -21,6 +25,7 @@ header {
 
   h4 {
     margin: 0 0 10px 0;
+    text-shadow: 0 0 10px black;
   }
   span {
     margin: 0;

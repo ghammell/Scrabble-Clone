@@ -1,3 +1,6 @@
+$('#instructions').slideUp()
+$('#rules_button').fadeIn().css('display', 'inline-block')
+
 var start_coordinate = <%= @start_coordinate.id %>
 $('#game_container').empty()
 $('#game_container').append("<%= escape_javascript(render @game) %>")
