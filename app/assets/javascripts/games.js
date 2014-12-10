@@ -1,5 +1,6 @@
 $(document).ready(function(){
   BindSeeRulesButton()
+  BindShuffleButtons()
 })
 
 var BindSeeRulesButton = function() {
@@ -9,7 +10,7 @@ var BindSeeRulesButton = function() {
 }
 
 var BindShuffleButtons = function() {
-  $('.shuffle_button').click( function() {
+  $('body').on('click', '.shuffle_button', function() {
     parent = $(this).parent().siblings('.hand_letters')
     divs = parent.children()
     parent.fadeOut(100, function() {

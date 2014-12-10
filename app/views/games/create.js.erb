@@ -1,25 +1,4 @@
-$('#instructions').slideUp()
-$('#rules_button').fadeIn().css('display', 'inline-block')
-
-var start_coordinate = <%= @start_coordinate.id %>
-$('#game_container').empty()
-$('#game_container').append("<%= escape_javascript(render @game) %>")
-$('.game').fadeIn( function(){
-  $('#p1_hand').slideDown( function(){
-    $('#p2_hand').slideDown()
-  })
-})
-$('.game').css('display', 'table')
-
-$('#p1_hand .letter').addClass('draggable')
-$('#p1_hand .word_buttons').fadeIn()
-BindDraggable('.draggable')
-BindDroppable('.coordinate')
-BindShuffleButtons()
-$('.coordinate').droppable('disable')
-$('#coordinate_' + start_coordinate).droppable('enable')
-
-$('.multiple_info').parent().addClass('multiple_div')
-$('.coordinate:not(.multiple_div)').addClass('non_multiple_div')
+var gameStarter = new GameStarter( <%= @start_coordinate.id %> )
+gameStarter.initiate( "<%= escape_javascript(render @game ) %>", '.game' )
 
 var gameId = $('.game').attr('id').split("_")[1]

@@ -15,16 +15,6 @@ class GamesController < ApplicationController
   def get_hand(num)
     vowels = ['A','E','I','O','U']
     alphabet = ('A'..'Z').to_a - vowels
-    (0..num).map do |num|
-      if num < 3
-        vowels.sample
-      else
-        alphabet.sample
-      end
-    end
-  end
-
-  def get_letter(num)
-    ('A'..'Z').to_a.sample
+    (0..num).map { |num| num < 3 ? vowels.sample : alphabet.sample }
   end
 end
