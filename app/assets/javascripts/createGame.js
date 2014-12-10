@@ -1,4 +1,4 @@
-function GameStarter( startCoordinate, game ) {
+function GameStarter( startCoordinate ) {
   this.startCoordinate = startCoordinate
   this.container = '#game_container'
   this.handOne = '#p1_hand'
