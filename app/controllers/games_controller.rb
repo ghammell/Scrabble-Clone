@@ -2,7 +2,7 @@ class GamesController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def create
-    @game = Game.create
+    @game = Game.includes(:coordinates).create
     @coordinates = @game.coordinates.sort_by {|coord| coord.id}
     @start_coordinate = @coordinates[@coordinates.length / 2]
     @p1_hand = get_hand(7)
