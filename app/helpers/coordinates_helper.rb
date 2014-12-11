@@ -94,7 +94,7 @@ module CoordinatesHelper
     taken = game.coordinates.where.not(letter: "")
     available = taken.map {|coord| get_available_neighbors(game, coord)}.flatten.uniq
     if available == []
-      coordinates = game.coordinates
+      coordinates = game.coordinates.order('id')
       [coordinates[coordinates.length / 2]]
     else
       available
