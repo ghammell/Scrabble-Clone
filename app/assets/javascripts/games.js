@@ -44,7 +44,7 @@ var BindDraggable = function(selector) {
     revert: 'invalid',
     snap: false,
     opacity: 0.9,
-    start: function() {
+    drag: function() {
       $('.ui-droppable:not(.ui-droppable-disabled)').css('background-color', '#8998BB')
       $('.ui-droppable:not(.ui-droppable-disabled) span').css('color', '#8998BB')
     },
