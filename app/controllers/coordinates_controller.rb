@@ -10,7 +10,7 @@ class CoordinatesController < ApplicationController
     @coordinate = Coordinate.includes(:friends).find(params["id"])
     CoordinatesHelper.update_neighbors(@game, @coordinate)
     @coordinate.update_attribute('letter', params["value"].squish)
-    @droppable_ids = CoordinatesHelper.determine_droppable_coordinates(@game).map{|coord| coord.id}
+    @droppable = CoordinatesHelper.determine_droppable_coordinates(@game)
     update_word(@coordinate)
   end
 
@@ -20,7 +20,7 @@ class CoordinatesController < ApplicationController
     @words = CoordinatesHelper::VerifyWord.valid_placement?(@game, @coordinates)
 
     if @words
-      @droppable_ids = CoordinatesHelper.determine_droppable_coordinates(@game).map{|coord| coord.id}
+      @droppable = CoordinatesHelper.determine_droppable_coordinates(@game)
       @results = @words.map {|word| [word[0].word, word[0].points]}
       update_player_session
       @letters = get_letters(@coordinates.length)
@@ -57,7 +57,7 @@ class CoordinatesController < ApplicationController
     @letters = session[:current_word].map {|hash| hash['letter']}
     @player = session[:player]
     session[:current_word] = []
-    @droppable_ids = CoordinatesHelper.determine_droppable_coordinates(@game).map{|coord| coord.id}
+    @droppable = CoordinatesHelper.determine_droppable_coordinates(@game)
   end
 
   def update_word(coordinate)

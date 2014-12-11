@@ -1,9 +1,9 @@
 var dropResetter = {
-  ids: <%= @droppable_ids %>,
+  coords: JSON.parse("<%= escape_javascript (@droppable.to_json.html_safe) %>"),
   reset: function() {
     $('.coordinate').droppable('disable')
-    for (i=0; i < this.ids.length; i++) {
-      coordinate_div = '#coordinate_' + this.ids[i]
+    for (i=0; i < this.coords.length; i++) {
+      coordinate_div = '#coordinate_' + this.coords[i].id
       $(coordinate_div).droppable('enable')
     }
   }
