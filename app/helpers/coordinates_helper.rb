@@ -1,7 +1,7 @@
 module CoordinatesHelper
   class VerifyWord
-    def self.valid_placement?(coordinates)
-      if check_placement(sort_coords(coordinates))
+    def self.valid_placement?(game, coordinates)
+      if check_placement(game, sort_coords(coordinates))
         check_connection_words(coordinates)
       end
     end
@@ -62,8 +62,7 @@ module CoordinatesHelper
       coordinates.sort_by {|coord| coord.vertical}.sort_by{|coord| coord.horizontal}
     end
 
-    def self.check_placement(coordinates)
-      game = coordinates.first.game
+    def self.check_placement(game, coordinates)
       if coordinates.first.vertical == coordinates.last.vertical
         same_column = true
       elsif coordinates.first.horizontal == coordinates.last.horizontal
@@ -89,37 +88,13 @@ module CoordinatesHelper
       coords = (first.vertical..last.vertical).map {|v_position| game.coordinates.find_by(horizontal: first.horizontal, vertical: v_position)}
       coords.each {|coord| return false if coord.letter == ''}
     end
-
-    # def self.check_placement(coordinates)
-    #   coordinates.map {|coord| [coord.vertical, coord.horizontal]}
-    #   (1...coordinates.length).each do |index|
-    #     previous = [coordinates[index-1].vertical, coordinates[index-1].horizontal]
-    #     current = [coordinates[index].vertical, coordinates[index].horizontal]
-    #     return false if test_all(current, previous) == false
-    #   end
-    #   return true
-    # end
-
-    # def self.test_all(current, previous)
-    #   return true if test_vertical(current, previous) == true
-    #   return test_horizontal(current, previous)
-    # end
-
-    # def self.test_vertical(current, previous)
-    #   (current[0] == previous[0]) && (current[1] == previous[1] + 1)
-    # end
-
-    # def self.test_horizontal(current, previous)
-    #   (current[0] == previous[0] + 1) && (current[1] == previous[1])
-    # end
   end
 
-  def self.determine_droppable_coordinates(game_id)
-    game = Game.find(game_id)
-    taken = game.coordinates.select {|coord| coord.letter != ''}
+  def self.determine_droppable_coordinates(game)
+    taken = game.coordinates.where.not(letter: "")
     available = taken.map {|coord| get_available_neighbors(game, coord)}.flatten.uniq
     if available == []
-      coordinates = game.coordinates.sort_by {|coord| coord.id}
+      coordinates = game.coordinates
       [coordinates[coordinates.length / 2]]
     else
       available
@@ -140,8 +115,7 @@ module CoordinatesHelper
     get_neighbor_coordinates(game, coordinate).select {|coord| coord.letter == ''}
   end
 
-  def self.update_neighbors(game_id, coordinate)
-    game = Game.find(game_id)
+  def self.update_neighbors(game, coordinate)
     if coordinate.friends == []
       coordinate.friends = get_neighbor_coordinates(game, coordinate)
     end

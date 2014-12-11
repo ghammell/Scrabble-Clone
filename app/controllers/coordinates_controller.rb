@@ -1,21 +1,26 @@
 class CoordinatesController < ApplicationController
   skip_before_action :verify_authenticity_token
+  before_action :get_game, only: [:update_letter, :reset_word, :submit_word]
+
+  def get_game
+    @game = Game.includes(:coordinates).find(session[:game])
+  end
 
   def update_letter
-    @coordinate = Coordinate.find(params["id"])
-    CoordinatesHelper.update_neighbors(session[:game], @coordinate)
+    @coordinate = Coordinate.includes(:friends).find(params["id"])
+    CoordinatesHelper.update_neighbors(@game, @coordinate)
     @coordinate.update_attribute('letter', params["value"].squish)
-    @droppable_ids = CoordinatesHelper.determine_droppable_coordinates(session[:game]).map{|coord| coord.id}
+    @droppable_ids = CoordinatesHelper.determine_droppable_coordinates(@game).map{|coord| coord.id}
     update_word(@coordinate)
   end
 
   def submit_word
     @coordinates = session[:current_word].map {|hash| Coordinate.find(hash['id'])}
     @coordinate_ids = @coordinates.map {|coord| coord.id}
-    @words = CoordinatesHelper::VerifyWord.valid_placement?(@coordinates)
+    @words = CoordinatesHelper::VerifyWord.valid_placement?(@game, @coordinates)
 
     if @words
-      @droppable_ids = CoordinatesHelper.determine_droppable_coordinates(session[:game]).map{|coord| coord.id}
+      @droppable_ids = CoordinatesHelper.determine_droppable_coordinates(@game).map{|coord| coord.id}
       @results = @words.map {|word| [word[0].word, word[0].points]}
       update_player_session
       @letters = get_letters(@coordinates.length).map {|letter| ('A'..'Z').to_a.index(letter)}
@@ -52,7 +57,7 @@ class CoordinatesController < ApplicationController
     @letters = session[:current_word].map {|hash| ('A'..'Z').to_a.index(hash['letter'])}
     @player = session[:player]
     session[:current_word] = []
-    @droppable_ids = CoordinatesHelper.determine_droppable_coordinates(session[:game]).map{|coord| coord.id}
+    @droppable_ids = CoordinatesHelper.determine_droppable_coordinates(@game).map{|coord| coord.id}
   end
 
   def update_word(coordinate)
