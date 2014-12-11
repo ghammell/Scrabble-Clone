@@ -15,8 +15,7 @@ class CoordinatesController < ApplicationController
   end
 
   def submit_word
-    @coordinates = session[:current_word].map {|hash| Coordinate.find(hash['id'])}
-    @coordinate_ids = @coordinates.map {|coord| coord.id}
+    @coordinates = session[:current_word].map {|hash| @game.coordinates.find(hash['id'])}
     @words = CoordinatesHelper::VerifyWord.valid_placement?(@game, @coordinates)
 
     if @words
@@ -52,7 +51,7 @@ class CoordinatesController < ApplicationController
   end
 
   def reset_word
-    session[:current_word].each {|hash| Coordinate.find(hash['id']).update_attribute('letter', '')}
+    session[:current_word].each {|hash| @game.coordinates.find(hash['id']).update_attribute('letter', '')}
     @reset_ids = session[:current_word].map{|hash| hash['id']}
     @letters = session[:current_word].map {|hash| hash['letter']}
     @player = session[:player]

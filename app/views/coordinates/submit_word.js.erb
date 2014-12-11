@@ -85,10 +85,10 @@ var add_results = {
 }
 
 var update_multiplier_divs = {
-  coordinates: <%= @coordinate_ids %>,
+  coordinates: JSON.parse("<%= escape_javascript (@coordinates.to_json.html_safe) %>"),
   update: function() {
     for(i=0; i < this.coordinates.length; i++) {
-      coord_div = $('#coordinate_' + this.coordinates[i])
+      coord_div = $('#coordinate_' + this.coordinates[i].id)
       if (coord_div.hasClass('multiple_div')) {
         coord_div.addClass('taken_multiple')
       }
