@@ -13,11 +13,11 @@ var hand = '#p' + player + '_hand'
 var nextPlayerHand = '#p' + nextPlayer + '_hand'
 
 var add_letters = {
-  letters: <%= @letters %>,
+  letters: JSON.parse("<%= escape_javascript (@letters.to_json.html_safe) %>"),
   add: function() {
     for (i=0; i < this.letters.length; i++){
       $(hand).children('ul').append(
-        "<li><div class='letter'>" + alphabet[this.letters[i]] + "</div></li>"
+        "<li><div class='letter'>" + this.letters[i] + "</div></li>"
       )
     }
   }

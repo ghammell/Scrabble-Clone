@@ -23,7 +23,7 @@ class CoordinatesController < ApplicationController
       @droppable_ids = CoordinatesHelper.determine_droppable_coordinates(@game).map{|coord| coord.id}
       @results = @words.map {|word| [word[0].word, word[0].points]}
       update_player_session
-      @letters = get_letters(@coordinates.length).map {|letter| ('A'..'Z').to_a.index(letter)}
+      @letters = get_letters(@coordinates.length)
       session[:current_word] = []
     else
       @errors = "Sorry, that placemenent is invalid."
@@ -54,7 +54,7 @@ class CoordinatesController < ApplicationController
   def reset_word
     session[:current_word].each {|hash| Coordinate.find(hash['id']).update_attribute('letter', '')}
     @reset_ids = session[:current_word].map{|hash| hash['id']}
-    @letters = session[:current_word].map {|hash| ('A'..'Z').to_a.index(hash['letter'])}
+    @letters = session[:current_word].map {|hash| hash['letter']}
     @player = session[:player]
     session[:current_word] = []
     @droppable_ids = CoordinatesHelper.determine_droppable_coordinates(@game).map{|coord| coord.id}
