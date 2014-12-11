@@ -1,5 +1,3 @@
-<%= render 'update_droppable' %>
-
 var player = <%= @player %>
 var hand = '#p' + player + '_hand'
 
@@ -35,6 +33,7 @@ var reset_letters = {
 
 reset_ids.reset()
 reset_letters.reset()
+var dropResetter = new DropResetter( JSON.parse("<%= escape_javascript (@droppable.to_json.html_safe) %>") )
 dropResetter.reset()
 
 $(hand + ' .letter').addClass('draggable')

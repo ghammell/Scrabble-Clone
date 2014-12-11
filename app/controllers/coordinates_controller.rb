@@ -19,7 +19,6 @@ class CoordinatesController < ApplicationController
     @words = CoordinatesHelper::VerifyWord.valid_placement?(@game, @coordinates)
 
     if @words
-      @droppable = CoordinatesHelper.determine_droppable_coordinates(@game)
       @results = @words.map {|word| [word[0].word, word[0].points]}
       update_player_session
       @letters = get_letters(@coordinates.length)

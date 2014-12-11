@@ -1,3 +1,2 @@
-<%= render 'update_droppable' %>
-
+var dropResetter = new DropResetter( JSON.parse("<%= escape_javascript (@droppable.to_json.html_safe) %>") )
 dropResetter.reset()
