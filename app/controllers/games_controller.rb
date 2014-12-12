@@ -17,7 +17,7 @@ class GamesController < ApplicationController
     alphabet = ('A'..'Z').to_a - vowels
     hand = []
     until hand.length == num
-      letter = (num < 3 ? vowels.sample : alphabet.sample)
+      letter = (hand.length < 3 ? vowels.sample : alphabet.sample)
       next if hand.count(letter) == 2
       hand << letter
     end
